@@ -16,6 +16,18 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
+        this.checkCollisions();
+    }
+
+    checkCollisions() {
+        setInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                if (this.character.isColliding(enemy)) {
+                    this.character.hit();
+                    console.log('Collision with chicken! my energy now', this.character.energy );
+                }
+            });
+        }, 200);
     }
 
     setWorld() {
@@ -49,15 +61,27 @@ class World {
 
     addToMap(mo) {
         if(mo.otherDirection){
-            this.ctx.save();
+          this.flipImage(mo);
+        }
+        mo.draw(this.ctx);
+
+        mo.drawFrame(this.ctx);
+        
+
+        if(mo.otherDirection){
+            this.flipImageBack(mo);
+        }
+    }
+
+    flipImage(mo){
+          this.ctx.save();
             this.ctx.translate(mo.width, 0);
             this.ctx.scale(-1,1);
             mo.x = mo.x * -1;
-        }
-        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
-        if(mo.otherDirection){
-            mo.x = mo.x * -1;
-            this.ctx.restore();
-        }
+    }
+
+    flipImageBack(mo){
+        mo.x = mo.x * -1;
+        this.ctx.restore();
     }
 }

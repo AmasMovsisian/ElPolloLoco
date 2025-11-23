@@ -11,6 +11,7 @@ class Movableobject {
     otherDirection = false;
     speedy = 0;
     acceleration = 2.5;
+    energy = 100;
 
     applyGravity() {
         setInterval(() => {
@@ -24,7 +25,7 @@ class Movableobject {
     }
 
     isAboveGround() {
-            return this.y < 135;
+        return this.y < 135;
     }
 
 
@@ -41,21 +42,50 @@ class Movableobject {
         });
     }
 
-    moveLeft(){
-          setInterval(() => {
-            this.x -= this.speed;
-        }, 1000 / 120);
+    draw(ctx) {
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
-    playAnimation(images){
-         let i = this.currentImage % images.length;
-            let path = images[i];
-            this.img = this.imageCahche[path];
-            this.currentImage++;
-            }
+    drawFrame(ctx) {
+        if (this instanceof Character || this instanceof Chicken) {
+            ctx.beginPath();
+            ctx.lineWidth = '4';
+            ctx.strokeStyle = 'blue';
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }
+    }
 
-    jump(){
+    isColliding(mo) {
+        return this.x + this.width > mo.x &&
+            this.y + this.height > mo.y &&
+            this.x < mo.x &&
+            this.y < mo.y + mo.height
+    }
+
+    hit() {
+        if (this.energy > 0) {
+            this.energy -= 5;
+        }
+    }
+
+    moveRight() {
+        this.x += this.speed;
+    }
+
+    moveLeft() {
+        this.x -= this.speed;
+    }
+
+    playAnimation(images) {
+        let i = this.currentImage % images.length;
+        let path = images[i];
+        this.img = this.imageCahche[path];
+        this.currentImage++;
+    }
+
+    jump() {
         this.speedy = 30;
     }
- }
+}
 

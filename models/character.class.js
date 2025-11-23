@@ -76,7 +76,7 @@ class Character extends Movableobject {
 
         setInterval(() => {
 
-            if(this.isHurt()) {
+            if (this.isHurt()) {
                 this.playAnimation(this.IMAGE_HURT);
             }
             else if (this.isDead()) {

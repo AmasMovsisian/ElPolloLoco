@@ -1,9 +1,21 @@
-body{
+body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-image: url(./img/BG/BG-IMAGE.jpg);
+    background-position: center start;
+    background-size: cover;
 }
 
-canvas{
+h1 {
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+    text-transform: uppercase;
+}
+
+
+canvas {
     background-color: black;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 1);
+    border-radius: 6px;
 }

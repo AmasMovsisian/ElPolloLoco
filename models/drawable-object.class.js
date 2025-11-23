@@ -1,4 +1,4 @@
-class DrawableObject  {
+class DrawableObject {
     x = 120;
     y = 280;
     img;
@@ -13,11 +13,11 @@ class DrawableObject  {
         this.img.src = path;
     }
 
-     draw(ctx) {
+    draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
-      drawFrame(ctx) {
+    drawFrame(ctx) {
         if (this instanceof Character || this instanceof Chicken) {
             ctx.beginPath();
             ctx.lineWidth = '4';
@@ -27,7 +27,7 @@ class DrawableObject  {
         }
     }
 
-       loadImages(arr) {
+    loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image();
             img.src = path;

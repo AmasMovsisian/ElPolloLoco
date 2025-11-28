@@ -4,6 +4,14 @@ class Character extends Movableobject {
     height = 300;
     y = 135;
     speed = 5;
+
+    offset = {
+        top: 100 ,
+        bottom: 15,
+        left: 30,
+        right: 30
+    }
+
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
@@ -32,7 +40,6 @@ class Character extends Movableobject {
         'img/2_character_pepe/5_dead/D-55.png',
         'img/2_character_pepe/5_dead/D-56.png',
         'img/2_character_pepe/5_dead/D-57.png'
-
     ];
 
     IMAGE_HURT = [
@@ -66,12 +73,12 @@ class Character extends Movableobject {
                 this.otherDirection = true;
             }
 
-            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+            if (this.world.keyboard.SPACE && !this.isAboveGround() || this.world.keyboard.UP && !this.isAboveGround()) {
                 this.jump()
             }
 
 
-            this.world.camera_x = -this.x + 100;
+            this.world.camera_x = -this.x + 200;
         }, 1000 / 120);
 
         setInterval(() => {
@@ -80,7 +87,8 @@ class Character extends Movableobject {
                 this.playAnimation(this.IMAGE_HURT);
             }
             else if (this.isDead()) {
-                this.playAnimation(this.IMAGE_DEAD);
+                this.playOnceAnimation(this.IMAGE_DEAD);
+                
             }
             else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGE_JUMP);
@@ -90,7 +98,7 @@ class Character extends Movableobject {
                     this.playAnimation(this.IMAGES_WALKING);
                 }
             }
-        }, 70);
+        }, 1000 / 24);
 
     }
 

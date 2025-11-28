@@ -28,12 +28,7 @@ class World {
         this.run();
     }
 
-    run() {
-        setInterval(() => {
-            this.checkCollisions();
-            this.checkThrowObjects();
-        }, 200);
-    }
+  
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
@@ -42,6 +37,35 @@ class World {
                 this.statusBar.setPercent(this.character.energy);
             }
         });
+    }
+
+    checkCoinsCollisions() {
+    // Wir müssen sicherstellen, dass das Array während der Iteration modifiziert werden kann.
+    // Wir iterieren durch das Array von hinten, damit das Entfernen eines Elements das Iterieren nicht beeinflusst.
+    for (let i = this.level.coins.length - 1; i >= 0; i--) {
+        const coin = this.level.coins[i];
+        
+        // Überprüfe die Kollision
+        if (this.character.isColliding(coin)) {
+            console.log("Kollidiert mit Coin");
+
+            // Erhöhe den Prozentwert der Coin Status Bar
+            this.coinStatusBar.setPercent(this.coinStatusBar.percent + 10); 
+            console.log("Neue Coin-Status-Bar Prozent: ", this.coinStatusBar.percent);
+            
+            // Entferne die Coin aus dem Array, da sie eingesammelt wurde
+            this.level.coins.splice(i, 1); // Entfernt die Coin an Index i
+        }
+    }
+}
+
+
+      run() {
+        setInterval(() => {
+            this.checkCollisions();
+            this.checkCoinsCollisions()
+            this.checkThrowObjects();
+        }, 60);
     }
 
     checkThrowObjects() {
@@ -59,36 +83,26 @@ class World {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.ctx.translate(this.camera_x, 0);
-
-
         
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.throwableObjects);
-
-  
         
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
 
-        
         this.ctx.translate(-this.camera_x, 0);
-       
        
         this.addToMap(this.statusBar);
         this.addToMap(this.coinStatusBar);
         this.addToMap(this.bottleStatusBar);
     
-        
-  
         this.ctx.translate(this.camera_x, 0);
-
 
         this.ctx.translate(-this.camera_x, 0);
         
-
         let self = this;
         requestAnimationFrame(function () {
             self.draw();

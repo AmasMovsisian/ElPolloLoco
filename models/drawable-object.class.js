@@ -7,6 +7,7 @@ class DrawableObject {
     imageCahche = {};
     currentImage = 0;
     currentImageDead = 0;
+      percentOfBottles = 0;
   
  
 

@@ -13,6 +13,7 @@ class World {
 
   coinStatusBar = new CoinStatusBar();
   bottleStatusBar = new BottleStatusBar();
+  
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -46,24 +47,30 @@ class World {
     for (let i = this.level.bottles.length - 1; i >= 0; i--) {
       const bottle = this.level.bottles[i];
       if (this.character.isColliding(bottle)) {
-        console.log("Kollidiert mit Bottle");
-        this.bottleStatusBar.setPercent(this.bottleStatusBar.percent + 10);
-        console.log(
-          "Neue Bottle-Status-Bar Prozent: ",
-          this.bottleStatusBar.percent
-        );
+        this.bottleStatusBar.setPercent(this.bottleStatusBar.percentOfBottles + 10);
         this.level.bottles.splice(i, 1);
+      }
+    }
+  }
+
+   checkCollisionsTop() {
+     for (let i = this.level.enemies.length - 1; i >= 0; i--) {
+      const enemy = this.level.enemies[i];
+      if (this.character.isCollidingTop(enemy)) {
+       console.log("Yeah killed chicken");
+        this.level.enemies.splice(i, 1);
       }
     }
   }
 
   run() {
     setInterval(() => {
+        this.checkCollisionsTop();
       this.checkCollisions();
       this.checkCoinsCollisions();
       this.checkBottlesCollisions();
       this.checkThrowObjects();
-    }, 60);
+    }, 30);
   }
 
   checkThrowObjects() {

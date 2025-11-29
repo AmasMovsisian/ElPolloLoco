@@ -16,6 +16,7 @@ class ThrowableObject extends Movableobject {
         this.height = 50;
         this.frame = 0;
         this.throw(100, 150);
+        
     }
 
     throw() {
@@ -23,7 +24,7 @@ class ThrowableObject extends Movableobject {
         this.applyGravity();
         setInterval(() => {
             this.x += 10;
-             this.frame = (this.frame + 1) % this.BOTTLE_ROTATION.length;
+            this.frame = (this.frame + 1) % this.BOTTLE_ROTATION.length;
             this.loadImage(this.BOTTLE_ROTATION[this.frame]);
         }, 25);
     }

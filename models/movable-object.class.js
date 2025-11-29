@@ -18,6 +18,7 @@ class Movableobject extends DrawableObject {
     rY;
     rW;
     rH;
+    
 
     applyGravity() {
         setInterval(() => {
@@ -46,8 +47,30 @@ class Movableobject extends DrawableObject {
             this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
     }
 
+    isCollidingTop(mo) {
+    if (!this.isColliding(mo)) return false;
+)
+    const bottomA = this.y + this.height - this.offset.bottom;
+    const topA    = this.y + this.offset.top;
+    const leftA   = this.x + this.offset.left;
+    const rightA  = this.x + this.width - this.offset.right;
+    const topB    = mo.y + mo.offset.top;
+    const leftB   = mo.x + mo.offset.left;
+    const rightB  = mo.x + mo.width - mo.offset.right;
+
+    const horizontallyCentered =
+        rightA > leftB && leftA < rightB;
+
+    if (!horizontallyCentered) return false;
+    const isAbove = bottomA <= topB + 10;  
+
+    if (!isAbove) return false;
+
+    return true;
+}
+
     hit() {
-        this.energy -= 10;
+        this.energy -= 1;
         if (this.energy < 0) {
             this.energy = 0;
         } else {
@@ -91,5 +114,6 @@ class Movableobject extends DrawableObject {
     jump() {
         this.speedy = 30;
     }
+
 }
 

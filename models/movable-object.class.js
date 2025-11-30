@@ -14,6 +14,7 @@ class Movableobject extends DrawableObject {
         right: 0
     }
 
+
     rX;
     rY;
     rW;
@@ -49,7 +50,6 @@ class Movableobject extends DrawableObject {
 
     isCollidingTop(mo) {
     if (!this.isColliding(mo)) return false;
-)
     const bottomA = this.y + this.height - this.offset.bottom;
     const topA    = this.y + this.offset.top;
     const leftA   = this.x + this.offset.left;
@@ -114,6 +114,10 @@ class Movableobject extends DrawableObject {
     jump() {
         this.speedy = 30;
     }
+
+    enemyWasHit() {
+    this.isDead = true;
+}  
 
 }
 

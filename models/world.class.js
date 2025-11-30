@@ -1,5 +1,7 @@
 class World {
   character = new Character();
+  smallChickens = new SmallChicken();
+  chicken = new Chicken();
   level = level1;
 
   ctx;
@@ -26,12 +28,15 @@ class World {
 
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
-      if (this.character.isColliding(enemy)) {
-        this.character.hit();
-        this.statusBar.setPercent(this.character.energy);
-      }
+        if (enemy.isHitFromTop) return;
+
+        if (this.character.isColliding(enemy)) {
+            this.character.hit();
+            this.statusBar.setPercent(this.character.energy);
+        }
     });
-  }
+}
+
 
   checkCoinsCollisions() {
     for (let i = this.level.coins.length - 1; i >= 0; i--) {
@@ -53,19 +58,23 @@ class World {
     }
   }
 
-   checkCollisionsTop() {
-     for (let i = this.level.enemies.length - 1; i >= 0; i--) {
-      const enemy = this.level.enemies[i];
-      if (this.character.isCollidingTop(enemy)) {
-       console.log("Yeah killed chicken");
-        this.level.enemies.splice(i, 1);
-      }
+  checkCollisionsTop() {
+    for (let i = this.level.enemies.length - 1; i >= 0; i--) {
+        const enemy = this.level.enemies[i];
+
+        if (this.character.isCollidingTop(enemy)) {
+            enemy.isHitFromTop = true;
+            enemy.enemyWasHit();
+            setTimeout(() => {
+                this.level.enemies.splice(i, 1);
+            }, 200);
+        }
     }
-  }
+}
 
   run() {
     setInterval(() => {
-        this.checkCollisionsTop();
+      this.checkCollisionsTop();
       this.checkCollisions();
       this.checkCoinsCollisions();
       this.checkBottlesCollisions();
@@ -147,4 +156,5 @@ class World {
     mo.x = mo.x * -1;
     this.ctx.restore();
   }
+
 }

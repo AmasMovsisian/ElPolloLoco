@@ -84,35 +84,32 @@ class World {
 
   checkBottleEnemyCollisions() {
     for (let i = this.throwableObjects.length - 1; i >= 0; i--) {
-        const bottle = this.throwableObjects[i];
+      const bottle = this.throwableObjects[i];
 
-        for (let j = this.level.enemies.length - 1; j >= 0; j--) {
-            const enemy = this.level.enemies[j];
+      for (let j = this.level.enemies.length - 1; j >= 0; j--) {
+        const enemy = this.level.enemies[j];
 
-            if (bottle.isColliding(enemy)) {
-                if (typeof enemy.splash === "function") {
-                    enemy.splash();
-                } else {
-            
-                    enemy.isDead = true;
-                    enemy.toRemove = true;
-                }
+        if (bottle.isColliding(enemy)) {
+          if (typeof enemy.splash === "function") {
+            enemy.splash();
+          } else {
+            enemy.isDead = true;
+            enemy.toRemove = true;
+          }
 
-                bottle.toRemove = true; 
+          bottle.toRemove = true;
 
-                setTimeout(() => {
-                    this.level.enemies = this.level.enemies.filter(e => e !== enemy);
-                }, 400);
+          setTimeout(() => {
+            this.level.enemies = this.level.enemies.filter((e) => e !== enemy);
+          }, 400);
 
-                break;
-            }
+          break;
         }
+      }
     }
 
-    this.throwableObjects = this.throwableObjects.filter(b => !b.toRemove);
-}
-
-
+    this.throwableObjects = this.throwableObjects.filter((b) => !b.toRemove);
+  }
 
   run() {
     setInterval(() => {
@@ -138,6 +135,9 @@ class World {
 
       this.throwableObjects.push(bottle);
       this.bottlesToThrow--;
+      this.bottleStatusBar.setPercent(
+        this.bottleStatusBar.percentOfBottles - 10
+      );
     }
     this.lastDPressed = this.keyboard.D;
   }

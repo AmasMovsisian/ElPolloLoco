@@ -18,7 +18,8 @@ class World {
 
   bottlesToThrow = 0;
   lastDPressed = false;
-  
+
+  bottlesThrown = [];
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -27,19 +28,19 @@ class World {
     this.draw();
     this.setWorld();
     this.run();
+    this.bottlesThrown = [];
   }
 
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
-        if (enemy.isHitFromTop) return;
+      if (enemy.isHitFromTop) return;
 
-        if (this.character.isColliding(enemy)) {
-            this.character.hit();
-            this.statusBar.setPercent(this.character.energy);
-        }
+      if (this.character.isColliding(enemy)) {
+        this.character.hit();
+        this.statusBar.setPercent(this.character.energy);
+      }
     });
-}
-
+  }
 
   checkCoinsCollisions() {
     for (let i = this.level.coins.length - 1; i >= 0; i--) {
@@ -56,7 +57,9 @@ class World {
       const bottle = this.level.bottles[i];
       if (this.character.isColliding(bottle)) {
         console.log(this.bottlesToThrow);
-        this.bottleStatusBar.setPercent(this.bottleStatusBar.percentOfBottles + 10);
+        this.bottleStatusBar.setPercent(
+          this.bottleStatusBar.percentOfBottles + 10
+        );
         this.level.bottles.splice(i, 1);
         this.bottlesToThrow++;
         console.log(this.bottlesToThrow);
@@ -66,17 +69,50 @@ class World {
 
   checkCollisionsTop() {
     for (let i = this.level.enemies.length - 1; i >= 0; i--) {
-        const enemy = this.level.enemies[i];
+      const enemy = this.level.enemies[i];
 
-        if (this.character.isCollidingTop(enemy)) {
-            enemy.isHitFromTop = true;
-            enemy.enemyWasHit();
-            setTimeout(() => {
-                this.level.enemies.splice(i, 1);
-            }, 200);
+      if (this.character.isCollidingTop(enemy)) {
+        enemy.isHitFromTop = true;
+        enemy.enemyWasHit();
+        this.isHitFromBottle = true;
+        setTimeout(() => {
+          this.level.enemies.splice(i, 1);
+        }, 200);
+      }
+    }
+  }
+
+  checkBottleEnemyCollisions() {
+    for (let i = this.throwableObjects.length - 1; i >= 0; i--) {
+        const bottle = this.throwableObjects[i];
+
+        for (let j = this.level.enemies.length - 1; j >= 0; j--) {
+            const enemy = this.level.enemies[j];
+
+            if (bottle.isColliding(enemy)) {
+                if (typeof enemy.splash === "function") {
+                    enemy.splash();
+                } else {
+            
+                    enemy.isDead = true;
+                    enemy.toRemove = true;
+                }
+
+                bottle.toRemove = true; 
+
+                setTimeout(() => {
+                    this.level.enemies = this.level.enemies.filter(e => e !== enemy);
+                }, 400);
+
+                break;
+            }
         }
     }
+
+    this.throwableObjects = this.throwableObjects.filter(b => !b.toRemove);
 }
+
+
 
   run() {
     setInterval(() => {
@@ -84,27 +120,27 @@ class World {
       this.checkCollisions();
       this.checkCoinsCollisions();
       this.checkBottlesCollisions();
+      this.checkBottleEnemyCollisions();
       this.checkThrowObjects();
     }, 30);
   }
 
   pickUpBottle() {
-  this.bottlesToThrow++;
-}
+    this.bottlesToThrow++;
+  }
 
   checkThrowObjects() {
-  if (this.keyboard.D && !this.lastDPressed && this.bottlesToThrow > 0) {
+    if (this.keyboard.D && !this.lastDPressed && this.bottlesToThrow > 0) {
+      let bottle = new ThrowableObject(
+        this.character.x + 100,
+        this.character.y + 100
+      );
 
-    let bottle = new ThrowableObject(
-      this.character.x + 100,
-      this.character.y + 100
-    );
-
-    this.throwableObjects.push(bottle);
-    this.bottlesToThrow--;
+      this.throwableObjects.push(bottle);
+      this.bottlesToThrow--;
+    }
+    this.lastDPressed = this.keyboard.D;
   }
-  this.lastDPressed = this.keyboard.D;
-}
 
   setWorld() {
     this.character.world = this;
@@ -170,5 +206,4 @@ class World {
     mo.x = mo.x * -1;
     this.ctx.restore();
   }
-
 }

@@ -7,10 +7,12 @@ const level1 = new Level(
 
     new SmallChicken(),
     new SmallChicken(),
-
-    new Endboss(),
-
   ],
+
+  [
+    new Endboss(),
+  ],
+
   [
     new Cloud(),
     new Cloud(),
@@ -48,8 +50,18 @@ const level1 = new Level(
     new Bottles(),
     new Bottles(),
     new Bottles(),
-
-
+    new Bottles(),
+    new Bottles(),
+    new Bottles(),
+    new Bottles(),
+    new Bottles(),
+    new Bottles(),
+    new Bottles(),
+    new Bottles(),
+    new Bottles(),
+    new Bottles(),
+    new Bottles(),
+    new Bottles(),
   ],
 
 

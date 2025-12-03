@@ -11,6 +11,7 @@ h1 {
     color: white;
     text-shadow: 2px 2px 4px #000000;
     text-transform: uppercase;
+    margin-bottom: 32px;
 }
 
 
@@ -18,4 +19,84 @@ canvas {
     background-color: black;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 1);
     border-radius: 6px;
+}
+
+.startContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90px;
+}
+
+.start-img-bg {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-radius: 6px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 1);
+    width: 720px;
+    height: 480px;
+    background-image: url(./img/9_intro_outro_screens/start/startscreen_2.png);
+    background-position: center;
+    background-size: contain;
+    background-position-y: 0px;
+
+}
+
+
+.start-BTN {
+    flex: 1;
+    padding-top: 32px;
+    padding-bottom: 32px;
+    padding-left: 28px;
+    padding-right: 28px;
+    border: none;
+    outline: none;
+    background: #0FFF00;
+    background: linear-gradient(180deg, rgba(15, 255, 0, 1) 0%, rgba(8, 115, 0, 1) 100%);
+    color: rgb(0, 0, 0);
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 18px;
+    transition: all 0.25s ease-in-out;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.25s ease-in-out;
+    border-radius: 6px 6px 0px 0px;
+}
+
+.start-BTN::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background-color: #0FFF00;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-in-out;
+}
+
+.start-BTN:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+.start-BTN:hover {
+    color: white;
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.secondery-bg {
+    background: #ff8800;
+    background: linear-gradient(180deg, rgba(255, 136, 0, 1) 0%, rgba(120, 42, 0, 1) 100%);
+    padding-top: 27px;
+    padding-bottom: 27px;
+    border-radius: 0px 0px 0px 0px;
+}
+
+.secondery-bg::after {
+    background-color: #ff8800;
 }

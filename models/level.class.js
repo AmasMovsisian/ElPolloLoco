@@ -5,7 +5,9 @@ class Level {
     coins;
     bottles;
     backgroundObjects;
-    level_end_x = 719 * 5;
+    level_end_x;
+    end_of_X;
+    
    
     
 
@@ -16,5 +18,19 @@ class Level {
         this.coins = coins;
         this.bottles = bottles;
         this.backgroundObjects = backgroundObjects;
+        this.endboss_X();
+        
+    }
+
+    endboss_X() {
+        for(let i = 0; i < this.endboss.length; i++) {
+
+            setInterval(() => {
+            this.end_of_X = this.endboss[i].x - 100;
+            this.level_end_x = this.end_of_X;
+            }, 1000 / 24);
+            
+        }
+        
     }
 }

@@ -5,6 +5,7 @@ class World {
   endboss = new Endboss();
   level = level1;
 
+
   ctx;
   canvas;
 
@@ -66,13 +67,11 @@ class World {
     for (let i = this.level.bottles.length - 1; i >= 0; i--) {
       const bottle = this.level.bottles[i];
       if (this.character.isColliding(bottle)) {
-        // console.log(this.bottlesToThrow);
         this.bottleStatusBar.setPercent(
           this.bottleStatusBar.percentOfBottles + 10
         );
         this.level.bottles.splice(i, 1);
         this.bottlesToThrow++;
-        // console.log(this.bottlesToThrow);
       }
     }
   }

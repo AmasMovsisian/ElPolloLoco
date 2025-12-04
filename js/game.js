@@ -16,8 +16,9 @@ function startGame() {
         menu.style.display = 'none';
         canvas.style.display = 'block';
 
-
+        initLevel1();
         init();
+        
     } else {
         console.error('Menu or canvas element not found');
     }

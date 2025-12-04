@@ -2,9 +2,19 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: url(./img/BG/BG-IMAGE.jpg);
+    background-image: url(../img/BG/BG-IMAGE.jpg);
     background-position: center start;
     background-size: cover;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+    transition: all 0.25s ease-in-out;
+}
+
+a:hover{
+    color: white;
 }
 
 h1 {
@@ -36,7 +46,7 @@ canvas {
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 1);
     width: 720px;
     height: 480px;
-    background-image: url(./img/9_intro_outro_screens/start/startscreen_2.png);
+    background-image: url(../img/9_intro_outro_screens/start/startscreen_2.png);
     background-position: center;
     background-size: contain;
     background-position-y: 0px;
@@ -52,9 +62,9 @@ canvas {
     padding-right: 28px;
     border: none;
     outline: none;
-    background: #0FFF00;
-    background: linear-gradient(180deg, rgba(15, 255, 0, 1) 0%, rgba(8, 115, 0, 1) 100%);
-    color: rgb(0, 0, 0);
+    background: #29abe2;
+    background: linear-gradient(180deg, rgb(36, 151, 200) 0%, rgba(107, 197, 235) 100%);
+    color: rgb(255, 255, 255);
     text-transform: uppercase;
     font-weight: 700;
     font-size: 18px;
@@ -73,7 +83,7 @@ canvas {
     left: 0;
     width: 100%;
     height: 6px;
-    background-color: #0FFF00;
+    background-color: #0087c6;
     transform: scaleX(0);
     transform-origin: bottom right;
     transition: transform 0.3s ease-in-out;
@@ -85,8 +95,9 @@ canvas {
 }
 
 .start-BTN:hover {
-    color: white;
+    color: rgb(222, 222, 222);
     box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
 }
 
 .secondery-bg {
@@ -95,6 +106,7 @@ canvas {
     padding-top: 27px;
     padding-bottom: 27px;
     border-radius: 0px 0px 0px 0px;
+    color: ;
 }
 
 .secondery-bg::after {

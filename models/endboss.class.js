@@ -62,25 +62,37 @@ class Endboss extends Movableobject {
         this.loadImages(this.IMAGE_DEAD_END_BOSS);
         this.x = 2600;
         this.animate();
+        this.isDead = false;
     }
 
     animate() {
-        setInterval(() => {
+        this.animationInterval = setInterval(() => {
             this.updateAnimation();
         }, 100);
-        setInterval(() => {
+
+        this.movementInterval = setInterval(() => {
             this.updateMovement();
         }, 1000 / 24);
     }
 
     updateAnimation() {
-        if (this.energy <= 0) {
-            this.playOnceAnimation(this.IMAGE_DEAD_END_BOSS);
+        if (this.isDead) {
+            this.playAnimation(this.IMAGE_DEAD_END_BOSS);
+            if (this.animationInterval) {
+                clearInterval(this.animationInterval);
+                this.animationInterval = null;
+            }
+            if (this.movementInterval) {
+                clearInterval(this.movementInterval);
+                this.movementInterval = null;
+            }
         } else if (this.isHurt) {
             this.playAnimation(this.IMAGE_HURT_END_BOSS);
             setTimeout(() => {
                 this.isHurt = false;
             }, 500);
+        } else if (this.isKillingActive) {
+            this.playAnimation(this.IMAGE_ATTACK_END_BOSS);
         } else if (this.energy <= 60) {
             this.playAnimation(this.IMAGE_ATTACK_END_BOSS);
         } else if (this.energy <= 80) {
@@ -91,15 +103,43 @@ class Endboss extends Movableobject {
     }
 
     updateMovement() {
+        if (this.isDead) return;
+        
         if (this.energy <= 80 && this.energy > 0) {
-            this.moveLeft();
+            if (Math.abs(this.x - world.character.x) <= 100) {
+                if (!this.isKillingActive) {
+                    this.startKillingMode();
+                }
+            } else {
+                if (this.isKillingActive) {
+                    this.stopKillingMode();
+                }
+                this.moveLeft();
+            }
         }
     }
 
+    startKillingMode() {
+        this.isKillingActive = true;
+        this.speed = 5;
+        this.jump();
+    }
+
+    stopKillingMode() {
+        this.isKillingActive = false;
+        this.speed = 5;
+    }
+
     hit(damage = 2) {
+        if (this.isDead) return;
+        
         this.energy -= damage;
         if (this.energy < 0) this.energy = 0;
         this.isHurt = true;
         console.log("Endboss hit! Energy: " + this.energy);
+        
+        if (this.energy <= 0) {
+            this.isDead = true;
+        }
     }
 }

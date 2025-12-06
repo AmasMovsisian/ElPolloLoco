@@ -8,7 +8,9 @@ class EndbossStatusBar extends DrawableObject {
     "img/7_statusbars/2_statusbar_endboss/blue/blue100.png",
   ];
 
-   energy = 100;
+  energy = 100;
+  deathSequenceStarted = false;
+  deathTimeout = null;
 
   constructor() {
     super();
@@ -21,31 +23,57 @@ class EndbossStatusBar extends DrawableObject {
     this.setPercent(100);
   }
 
-  setPercent(energy) {
-        this.energy = energy;
-        let path = this.IMAGES_ENDBOSS_HEALTH[this.resolveImageIndex()];
-        this.img = this.imageCahche[path];
+   startDeathSequence() {
+        if (!gameRunning) return;
+        
+        this.deathSequenceStarted = true;
+        
+        this.deathTimeout = setTimeout(() => {
+            if (gameRunning) {
+                this.GameWon();
+            }
+        }, 1500);
     }
 
-    resolveImageIndex() {
-        if (this.energy == 100) {
-            return 5;
-        } else if (this.energy >= 80) {
-            return 4;
-        }
-        else if (this.energy >= 60) {
-            return 3;
-        }
-        else if (this.energy >= 40) {
-            return 2;
-        }
-        else if (this.energy >= 20) {
-            return 1;
-        } else {
-            return 0;
-        }
 
-  
-}
+  setPercent(energy) {
+    this.energy = energy;
+    let path = this.IMAGES_ENDBOSS_HEALTH[this.resolveImageIndex()];
+    this.img = this.imageCahche[path];
+
+    if (this.energy === 0 && !this.deathSequenceStarted) {
+      this.startDeathSequence();
+    }
+  }
+
+  resolveImageIndex() {
+    if (this.energy == 100) {
+      return 5;
+    } else if (this.energy >= 80) {
+      return 4;
+    } else if (this.energy >= 60) {
+      return 3;
+    } else if (this.energy >= 40) {
+      return 2;
+    } else if (this.energy >= 20) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+
+  startDeathSequence() {
+    this.deathSequenceStarted = true;
+    setTimeout(() => {
+      this.GameWon();
+    }, 1500);
+  }
+
+  GameWon() {
+    if (this.energy == 0) {
+      endGame();
+    }
+  }
 
 }

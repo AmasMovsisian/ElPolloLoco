@@ -49,7 +49,7 @@ canvas {
     background-image: url(../img/9_intro_outro_screens/start/startscreen_2.png);
     background-position: center;
     background-size: contain;
-    background-position-y: 0px;
+    background-position-y: 0.3px;
 
 }
 
@@ -106,9 +106,108 @@ canvas {
     padding-top: 27px;
     padding-bottom: 27px;
     border-radius: 0px 0px 0px 0px;
-    color: ;
 }
 
 .secondery-bg::after {
     background-color: #ff8800;
+}
+
+
+.end-menu {
+    display: none;
+}
+
+.end-container {
+    display: flex;
+    justify-content: spa;
+    align-items: center;
+    min-height: 90px;
+}
+
+.end-img-bg{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    border-radius: 6px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 1);
+    width: 720px;
+    height: 480px;
+    background-color: #000000;
+    background-image: url(../img/9_intro_outro_screens/game_over/you_won.jpg);
+    background-position: center;
+    background-size: cover;
+    
+}
+
+.end-BTN{
+    flex: 1;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    border: none;
+    outline: none;
+    margin-top: 128px;
+    background: linear-gradient(180deg, rgb(36, 151, 200) 0%, rgba(107, 197, 235) 100%);
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 18px;
+    transition: all 0.25s ease-in-out;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.25s ease-in-out;
+}
+
+.end-BTN::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background-color: #0087c6;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-in-out;
+}
+
+.end-BTN:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+.end-BTN:hover {
+    color: rgb(222, 222, 222);
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.lost-menu {
+    display: none;
+}
+
+.lost-container {
+    display: flex;
+    justify-content: spa;
+    align-items: center;
+    min-height: 90px;
+}
+
+.lost-img-bg{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    border-radius: 6px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 1);
+    width: 720px;
+    height: 480px;
+    background-color: #000000;
+    background-image: url(../img/9_intro_outro_screens/game_over/you_lost.jpg);
+    background-position: center;
+    background-size: cover;
+    
 }

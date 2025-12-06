@@ -1,29 +1,109 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let gameRunning = false;
 
 function init() {
     canvas = document.getElementById("canvas");
     world = new World(canvas, keyboard);
 }
 
+function stopAllGameProcesses() {
+    gameRunning = false;
+    
+    if (world && world.statusBar && world.statusBar.deathTimeout) {
+        clearTimeout(world.statusBar.deathTimeout);
+    }
+    
+    if (world && world.endBossStatusbar && world.endBossStatusbar.deathTimeout) {
+        clearTimeout(world.endBossStatusbar.deathTimeout);
+    }
+    
+    if (world && world.stopGame) {
+        world.stopGame();
+    }
+    
+    if (world && world.character && world.character.stopAnimations) {
+        world.character.stopAnimations();
+    }
+    
+    if (world && world.level && world.level.enemies) {
+        world.level.enemies.forEach(enemy => {
+            if (enemy.stopAnimations) enemy.stopAnimations();
+        });
+    }
+    
+    if (world && world.level && world.level.endboss) {
+        world.level.endboss.forEach(boss => {
+            if (boss.stopAnimations) boss.stopAnimations();
+        });
+    }
+    
+    const highestId = window.setTimeout(() => {}, 0);
+    for (let i = 0; i < highestId; i++) {
+        window.clearTimeout(i);
+    }
+}
 
 function startGame() {
     const menu = document.getElementById('menu');
     const canvas = document.getElementById('canvas');
-
-    if (menu && canvas) {
-        menu.style.display = 'none';
-        canvas.style.display = 'block';
-
-        initLevel1();
-        init();
-        
-    } else {
-        console.error('Menu or canvas element not found');
-    }
+    const endMenu = document.getElementById('endMenu');
+    const lostMenu = document.getElementById('lostMenu');
+    stopAllGameProcesses();
+    
+    menu.style.display = 'none';
+    endMenu.style.display = 'none';
+    lostMenu.style.display = 'none';
+    canvas.style.display = 'block';
+    gameRunning = true;
+    
+    initLevel1();
+    init();
 }
 
+function home(){
+    const menu = document.getElementById('menu');
+    const canvas = document.getElementById('canvas');
+    const endMenu = document.getElementById('endMenu');
+    const lostMenu = document.getElementById('lostMenu');
+
+    stopAllGameProcesses();
+
+    menu.style.display = 'block';
+    endMenu.style.display = 'none';
+    lostMenu.style.display = 'none';
+    canvas.style.display = 'none';
+}
+
+
+function endGame() {
+    const menu = document.getElementById('menu');
+    const canvas = document.getElementById('canvas');
+    const endMenu = document.getElementById('endMenu');
+    const lostMenu = document.getElementById('lostMenu');
+
+    stopAllGameProcesses();
+    
+    endMenu.style.display = 'block';
+    menu.style.display = 'none';
+    lostMenu.style.display = 'none';
+    canvas.style.display = 'none';
+}
+
+function lostGame() {
+    const menu = document.getElementById('menu');
+    const canvas = document.getElementById('canvas');
+    const endMenu = document.getElementById('endMenu');
+    const lostMenu = document.getElementById('lostMenu');
+    stopAllGameProcesses();
+    
+    endMenu.style.display = 'none';
+    lostMenu.style.display = 'block';
+    menu.style.display = 'none';
+    canvas.style.display = 'none';
+  
+}
 
 document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('keydown', (e) => {

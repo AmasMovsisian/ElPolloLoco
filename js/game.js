@@ -140,40 +140,54 @@ function lostGame() {
     toggleMobileButtons();
 }
 
+
 document.addEventListener('DOMContentLoaded', function () {
     const leftBtn = document.querySelector('.m-left');
     const rightBtn = document.querySelector('.m-right');
     const jumpBtn = document.querySelector('.m-jump');
     const bottleBtn = document.querySelector('.m-bottle');
 
+    const setKey = (key, value) => keyboard[key] = value;
+
+    const addTouchControl = (element, key) => {
+        element.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            setKey(key, true);
+        }, { passive: false });
+
+        element.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            setKey(key, false);
+        }, { passive: false });
+
+        element.addEventListener('touchcancel', (e) => {
+            e.preventDefault();
+            setKey(key, false);
+        }, { passive: false });
+    };
+
+    addTouchControl(leftBtn, 'LEFT');
+    addTouchControl(rightBtn, 'RIGHT');
+    addTouchControl(jumpBtn, 'UP');
+    addTouchControl(bottleBtn, 'F');
+
     window.addEventListener('keydown', (e) => {
-        if (e.code == "ArrowLeft" || e.code == "KeyA") keyboard.LEFT = true;
-        if (e.code == "ArrowRight" || e.code == "KeyD") keyboard.RIGHT = true;
-        if (e.code == "ArrowUp" || e.code == "KeyW" || e.code == "Space") keyboard.UP = true;
-        if (e.code == "ArrowDown" || e.code == "KeyS") keyboard.DOWN = true;
-        if (e.code == "KeyF") keyboard.F = true;
+        if (e.code == "ArrowLeft" || e.code == "KeyA") setKey('LEFT', true);
+        if (e.code == "ArrowRight" || e.code == "KeyD") setKey('RIGHT', true);
+        if (e.code == "ArrowUp" || e.code == "KeyW" || e.code == "Space") setKey('UP', true);
+        if (e.code == "ArrowDown" || e.code == "KeyS") setKey('DOWN', true);
+        if (e.code == "KeyF") setKey('F', true);
     });
 
     window.addEventListener('keyup', (e) => {
-        if (e.code == "ArrowLeft" || e.code == "KeyA") keyboard.LEFT = false;
-        if (e.code == "ArrowRight" || e.code == "KeyD") keyboard.RIGHT = false;
-        if (e.code == "ArrowUp" || e.code == "KeyW" || e.code == "Space") keyboard.UP = false;
-        if (e.code == "ArrowDown" || e.code == "KeyS") keyboard.DOWN = false;
-        if (e.code == "KeyF") keyboard.F = false;
+        if (e.code == "ArrowLeft" || e.code == "KeyA") setKey('LEFT', false);
+        if (e.code == "ArrowRight" || e.code == "KeyD") setKey('RIGHT', false);
+        if (e.code == "ArrowUp" || e.code == "KeyW" || e.code == "Space") setKey('UP', false);
+        if (e.code == "ArrowDown" || e.code == "KeyS") setKey('DOWN', false);
+        if (e.code == "KeyF") setKey('F', false);
     });
-
-    leftBtn.addEventListener('touchstart', () => keyboard.LEFT = true);
-    leftBtn.addEventListener('touchend', () => keyboard.LEFT = false);
-
-    rightBtn.addEventListener('touchstart', () => keyboard.RIGHT = true);
-    rightBtn.addEventListener('touchend', () => keyboard.RIGHT = false);
-
-    jumpBtn.addEventListener('touchstart', () => keyboard.UP = true);
-    jumpBtn.addEventListener('touchend', () => keyboard.UP = false);
-
-    bottleBtn.addEventListener('touchstart', () => keyboard.F = true);
-    bottleBtn.addEventListener('touchend', () => keyboard.F = false);
 });
+
 
 const startButton = document.getElementById('startButton');
 if (startButton) {

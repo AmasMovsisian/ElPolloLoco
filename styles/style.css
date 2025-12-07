@@ -289,6 +289,11 @@ h1 {
     pointer-events: auto;
     position: absolute;
     user-select: none;
+    -webkit-user-select: none; 
+    -webkit-touch-callout: none;
+    user-select: none;
+    pointer-events: auto;
+    touch-action: none; 
     transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 

@@ -136,8 +136,6 @@ class Endboss extends Movableobject {
         this.energy -= damage;
         if (this.energy < 0) this.energy = 0;
         this.isHurt = true;
-        console.log("Endboss hit! Energy: " + this.energy);
-        
         if (this.energy <= 0) {
             this.isDead = true;
         }

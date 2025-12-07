@@ -17,9 +17,28 @@ function rotationCheckDisplay() {
     }
 }
 
+
 window.addEventListener("resize", rotationCheckDisplay);
 window.addEventListener("orientationchange", rotationCheckDisplay);
 window.addEventListener("load", rotationCheckDisplay);
+
+function toggleMobileButtons() {
+    const mobileBtns = document.getElementById("mobileIconsContainer");
+
+    const isMobile = window.innerWidth < 900;
+    const isLandscape = window.innerWidth > window.innerHeight;
+
+    if (gameRunning && isMobile && isLandscape) {
+        mobileBtns.style.display = "block";
+    } else {
+        mobileBtns.style.display = "none";
+    }
+}
+
+window.addEventListener("resize", toggleMobileButtons);
+window.addEventListener("orientationchange", toggleMobileButtons);
+window.addEventListener("load", toggleMobileButtons);
+
 
 function init() {
     canvas = document.getElementById("canvas");
@@ -74,7 +93,10 @@ function startGame() {
 
     initLevel1();
     init();
+
+    toggleMobileButtons();
 }
+
 
 function home() {
     const menu = document.getElementById('menu');
@@ -88,34 +110,34 @@ function home() {
     endMenu.style.display = 'none';
     lostMenu.style.display = 'none';
     canvas.style.display = 'none';
+
+    gameRunning = false;
+
+    toggleMobileButtons();
 }
 
 function endGame() {
-    const menu = document.getElementById('menu');
-    const canvas = document.getElementById('canvas');
-    const endMenu = document.getElementById('endMenu');
-    const lostMenu = document.getElementById('lostMenu');
-
     stopAllGameProcesses();
+    gameRunning = false;
 
-    endMenu.style.display = 'block';
-    menu.style.display = 'none';
-    lostMenu.style.display = 'none';
-    canvas.style.display = 'none';
+    document.getElementById('endMenu').style.display = 'block';
+    document.getElementById('menu').style.display = 'none';
+    document.getElementById('lostMenu').style.display = 'none';
+    document.getElementById('canvas').style.display = 'none';
+
+    toggleMobileButtons();
 }
 
 function lostGame() {
-    const menu = document.getElementById('menu');
-    const canvas = document.getElementById('canvas');
-    const endMenu = document.getElementById('endMenu');
-    const lostMenu = document.getElementById('lostMenu');
-
     stopAllGameProcesses();
+    gameRunning = false;
 
-    endMenu.style.display = 'none';
-    lostMenu.style.display = 'block';
-    menu.style.display = 'none';
-    canvas.style.display = 'none';
+    document.getElementById('lostMenu').style.display = 'block';
+    document.getElementById('menu').style.display = 'none';
+    document.getElementById('endMenu').style.display = 'none';
+    document.getElementById('canvas').style.display = 'none';
+
+    toggleMobileButtons();
 }
 
 document.addEventListener('DOMContentLoaded', function () {

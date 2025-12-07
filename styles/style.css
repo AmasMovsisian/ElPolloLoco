@@ -273,33 +273,62 @@ h1 {
 }
 
 
-/* .mobile-icons {
-    position: absolute;
+.mobile-icons-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    display: none; /* wird durch JS sichtbar */
+    z-index: 999;
+}
+
+.mobile-icons {
+    border-radius: 50px;
+    align-self: center;
     width: 50px;
     height: 50px;
-    top: 590px;
-}
-
-
-.m-left {
-    left: 400px;
-}
-
-.m-right {
-    left: 450px;
-}
-
-.m-jump {
-    left: 950px;
-}
-
-.m-bottle {
-    left: 1050px;
+    pointer-events: auto;
+    position: absolute;
+    user-select: none;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 
 .mobile-icons:hover {
+    opacity: 0.7;
+    transform: scale(0.95);
+}
+
+.mobile-icons:active {
     opacity: 0.5;
-} */
+    transform: scale(0.9);
+}
+
+.m-left {
+    bottom: 20px;
+    left: 10px;
+    background-color: rgb(248, 147, 103);
+    border: 1px solid rgb(255, 123, 0);
+}
+
+.m-right {
+    bottom: 20px;
+    left: 70px;
+    background-color: rgb(248, 147, 103);
+    border: 1px solid rgb(255, 123, 0);
+}
+
+.m-jump {
+    bottom: 20px;
+    right: 70px;
+    background-color: rgb(174, 214, 254);
+    border: 1px solid rgb(0, 149, 255);
+}
+
+.m-bottle {
+    bottom: 20px;
+    right: 10px;
+    background-color: rgb(178, 90, 90);
+    border: 1px solid red;
+}
 
 .rotation-warning-box{
     position: fixed;

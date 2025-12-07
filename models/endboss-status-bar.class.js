@@ -16,7 +16,7 @@ class EndbossStatusBar extends DrawableObject {
     super();
     this.loadImage("img/7_statusbars/2_statusbar_endboss/blue/blue100.png");
     this.loadImages(this.IMAGES_ENDBOSS_HEALTH);
-    this.x = 480;
+    this.x = 450;
     this.y = 8;
     this.width = 200;
     this.height = 60;
@@ -25,7 +25,6 @@ class EndbossStatusBar extends DrawableObject {
 
    startDeathSequence() {
         if (!gameRunning) return;
-        
         this.deathSequenceStarted = true;
         
         this.deathTimeout = setTimeout(() => {

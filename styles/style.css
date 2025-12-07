@@ -1,10 +1,33 @@
+@font-face {
+    font-family: 'Luckiest Guy';
+    src: url('../font/LuckiestGuy-Regular.ttf') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+*{
+    font-family: 'Luckiest Guy', sans-serif;
+    font-weight: 100;
+}
+
 body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-image: url(../img/BG/BG-IMAGE.jpg);
-    background-position: center start;
-    background-size: cover;
+display: flex;
+flex-direction: column;
+align-items: center;
+
+background-image: url(../img/BG/BG-IMAGE.jpg);
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+background-attachment: fixed;
+min-height: 100vh;
+font-family: 'Luckiest Guy', sans-serif;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 }
 
 a{
@@ -22,14 +45,9 @@ h1 {
     text-shadow: 2px 2px 4px #000000;
     text-transform: uppercase;
     margin-bottom: 32px;
+    font-size: 72px;
 }
 
-
-canvas {
-    background-color: black;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 1);
-    border-radius: 6px;
-}
 
 .startContainer {
     display: flex;
@@ -63,11 +81,11 @@ canvas {
     border: none;
     outline: none;
     background: #29abe2;
-    background: linear-gradient(180deg, rgb(36, 151, 200) 0%, rgba(107, 197, 235) 100%);
+    background: linear-gradient(180deg, rgb(21, 105, 141) 0%, rgba(107, 197, 235) 100%);
     color: rgb(255, 255, 255);
     text-transform: uppercase;
-    font-weight: 700;
-    font-size: 18px;
+    font-weight: 100;
+    font-size: 28px;
     transition: all 0.25s ease-in-out;
     display: inline-block;
     position: relative;
@@ -106,6 +124,7 @@ canvas {
     padding-top: 27px;
     padding-bottom: 27px;
     border-radius: 0px 0px 0px 0px;
+    font-size: 18px;
 }
 
 .secondery-bg::after {
@@ -152,7 +171,7 @@ canvas {
     background: linear-gradient(180deg, rgb(36, 151, 200) 0%, rgba(107, 197, 235) 100%);
     color: rgb(255, 255, 255);
     text-transform: uppercase;
-    font-weight: 700;
+    font-weight: 100;
     font-size: 18px;
     transition: all 0.25s ease-in-out;
     display: inline-block;
@@ -210,4 +229,124 @@ canvas {
     background-position: center;
     background-size: cover;
     
+}
+
+
+.restart-icon{
+    display: none;
+}
+
+.canvas-container {
+    position: relative;
+    display: inline-block; 
+}
+
+.restart-icon{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 420px;
+    left: 33px;
+    color: white;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.25s ease-in-out;
+    font-size: 16px;
+}
+
+.restart-icon:hover {
+    opacity: 0.7;
+}
+
+.restart-text{
+    opacity: 0.7;
+    background-color: #0087c6;
+    padding: 3px;
+    border-radius: 6px;
+    font-weight: 700;
+    position: absolute;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    z-index: 10;
+    top: 443px;
+    left: 63px;
+}
+
+
+/* .mobile-icons {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: 590px;
+}
+
+
+.m-left {
+    left: 400px;
+}
+
+.m-right {
+    left: 450px;
+}
+
+.m-jump {
+    left: 950px;
+}
+
+.m-bottle {
+    left: 1050px;
+}
+
+.mobile-icons:hover {
+    opacity: 0.5;
+} */
+
+.rotation-warning-box{
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    color: white;
+    font-size: clamp(18px, 5vw, 32px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+canvas {
+    background-color: black;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 1);
+    border-radius: 6px;
+    display: block;
+}
+
+@media (max-width: 720px) {
+  h1 {
+    display: none;
+  }
+}
+
+@media (max-height: 720px) {
+  h1 {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  canvas,
+  .startContainer,
+  .end-menu,
+  .lost-menu {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-height: 480px) {
+  canvas {
+    height: 100vh;
+  }
 }

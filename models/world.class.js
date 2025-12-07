@@ -236,7 +236,7 @@ class World {
     this.addToMap(this.statusBar);
     this.addToMap(this.coinStatusBar);
     this.addToMap(this.bottleStatusBar);
-    this.addToMap(this.endBossStatusbar);
+    this.showEndBossStatusBar();
 
     this.ctx.translate(this.camera_x, 0);
     this.ctx.translate(-this.camera_x, 0);
@@ -245,6 +245,18 @@ class World {
     this.animationFrameId = requestAnimationFrame(function () {
       self.draw();
     });
+  }
+
+  showEndBossStatusBar() {
+    if(this.endBossStatusbarShown === undefined) {
+    this.endBossStatusbarShown = false;
+    }
+    if(!this.endBossStatusbarShown && this.endboss.x - this.character.x <= 450) {
+      this.endBossStatusbarShown = true;
+    }
+    if(this.endBossStatusbarShown){
+      return this.addToMap(this.endBossStatusbar);
+    }
   }
 
   addObjectsToMap(objects) {

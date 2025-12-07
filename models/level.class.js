@@ -24,7 +24,6 @@ class Level {
 
     endboss_X() {
         for(let i = 0; i < this.endboss.length; i++) {
-
             setInterval(() => {
             this.end_of_X = this.endboss[i].x - 100;
             this.level_end_x = this.end_of_X;

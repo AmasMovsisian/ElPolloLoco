@@ -194,10 +194,10 @@ class World {
     this.bottlesToThrow++;
   }
 
-  checkThrowObjects() {
+ checkThrowObjects() {
     if (!this.isGameRunning) return;
     
-    if (this.keyboard.D && !this.lastDPressed && this.bottlesToThrow > 0) {
+    if (this.keyboard.F && !this.lastFPressed && this.bottlesToThrow > 0) {
       let bottle = new ThrowableObject(
         this.character.x + 100,
         this.character.y + 100
@@ -208,8 +208,8 @@ class World {
         this.bottleStatusBar.percentOfBottles - 10
       );
     }
-    this.lastDPressed = this.keyboard.D;
-  }
+    this.lastFPressed = this.keyboard.F; 
+}
 
   setWorld() {
     this.character.world = this;

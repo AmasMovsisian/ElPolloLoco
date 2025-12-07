@@ -141,23 +141,38 @@ function lostGame() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    const leftBtn = document.querySelector('.m-left');
+    const rightBtn = document.querySelector('.m-right');
+    const jumpBtn = document.querySelector('.m-jump');
+    const bottleBtn = document.querySelector('.m-bottle');
+
     window.addEventListener('keydown', (e) => {
-        if (e.code == "ArrowRight") keyboard.RIGHT = true;
-        if (e.code == "ArrowLeft") keyboard.LEFT = true;
-        if (e.code == "ArrowUp") keyboard.UP = true;
-        if (e.code == "ArrowDown") keyboard.DOWN = true;
-        if (e.code == "Space") keyboard.SPACE = true;
-        if (e.code == "KeyD") keyboard.D = true;
+        if (e.code == "ArrowLeft" || e.code == "KeyA") keyboard.LEFT = true;
+        if (e.code == "ArrowRight" || e.code == "KeyD") keyboard.RIGHT = true;
+        if (e.code == "ArrowUp" || e.code == "KeyW" || e.code == "Space") keyboard.UP = true;
+        if (e.code == "ArrowDown" || e.code == "KeyS") keyboard.DOWN = true;
+        if (e.code == "KeyF") keyboard.F = true;
     });
 
     window.addEventListener('keyup', (e) => {
-        if (e.code == "ArrowRight") keyboard.RIGHT = false;
-        if (e.code == "ArrowLeft") keyboard.LEFT = false;
-        if (e.code == "ArrowUp") keyboard.UP = false;
-        if (e.code == "ArrowDown") keyboard.DOWN = false;
-        if (e.code == "Space") keyboard.SPACE = false;
-        if (e.code == "KeyD") keyboard.D = false;
+        if (e.code == "ArrowLeft" || e.code == "KeyA") keyboard.LEFT = false;
+        if (e.code == "ArrowRight" || e.code == "KeyD") keyboard.RIGHT = false;
+        if (e.code == "ArrowUp" || e.code == "KeyW" || e.code == "Space") keyboard.UP = false;
+        if (e.code == "ArrowDown" || e.code == "KeyS") keyboard.DOWN = false;
+        if (e.code == "KeyF") keyboard.F = false;
     });
+
+    leftBtn.addEventListener('touchstart', () => keyboard.LEFT = true);
+    leftBtn.addEventListener('touchend', () => keyboard.LEFT = false);
+
+    rightBtn.addEventListener('touchstart', () => keyboard.RIGHT = true);
+    rightBtn.addEventListener('touchend', () => keyboard.RIGHT = false);
+
+    jumpBtn.addEventListener('touchstart', () => keyboard.UP = true);
+    jumpBtn.addEventListener('touchend', () => keyboard.UP = false);
+
+    bottleBtn.addEventListener('touchstart', () => keyboard.F = true);
+    bottleBtn.addEventListener('touchend', () => keyboard.F = false);
 });
 
 const startButton = document.getElementById('startButton');

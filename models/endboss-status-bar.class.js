@@ -23,17 +23,16 @@ class EndbossStatusBar extends DrawableObject {
     this.setPercent(100);
   }
 
-   startDeathSequence() {
-        if (!gameRunning) return;
-        this.deathSequenceStarted = true;
-        
-        this.deathTimeout = setTimeout(() => {
-            if (gameRunning) {
-                this.GameWon();
-            }
-        }, 1500);
-    }
+  startDeathSequence() {
+    if (!gameRunning) return;
+    this.deathSequenceStarted = true;
 
+    this.deathTimeout = setTimeout(() => {
+      if (gameRunning) {
+        this.GameWon();
+      }
+    }, 1500);
+  }
 
   setPercent(energy) {
     this.energy = energy;
@@ -61,7 +60,6 @@ class EndbossStatusBar extends DrawableObject {
     }
   }
 
-
   startDeathSequence() {
     this.deathSequenceStarted = true;
     setTimeout(() => {
@@ -74,5 +72,4 @@ class EndbossStatusBar extends DrawableObject {
       endGame();
     }
   }
-
 }

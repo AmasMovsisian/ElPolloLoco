@@ -61,7 +61,8 @@ h2 {
     color: #ffcc00;
 }
 
-p, li {
+p,
+li {
     font-size: 1.1rem;
     line-height: 1.6;
     color: #ffffff;
@@ -96,12 +97,16 @@ ul {
     h1 {
         font-size: 2rem;
     }
+
     h2 {
         font-size: 1.5rem;
     }
-    p, li {
+
+    p,
+    li {
         font-size: 1rem;
     }
+
     main {
         margin: 20px;
     }
@@ -111,10 +116,13 @@ ul {
     h1 {
         font-size: 1.7rem;
     }
+
     h2 {
         font-size: 1.3rem;
     }
-    p, li {
+
+    p,
+    li {
         font-size: 0.95rem;
     }
 }

@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>El Pollo Loco</title>
   <link rel="stylesheet" href="./styles/style.css">
+  <link rel="icon" type="image/x-icon" href="/ElPolloLoco/img/icons/reset.png">
+  <script src="./models/audio.class.js"></script>
   <script src="./models/drawable-object.class.js"></script>
   <script src="./models/bottle-status-bar.class.js"></script>
   <script src="./models/coins-status-bar.class.js"></script>
@@ -31,9 +33,9 @@
 
 <body>
 
- <div id="rotationWarningBox" class="rotation-warning-box">
+  <div id="rotationWarningBox" class="rotation-warning-box">
     Bitte das Gerät drehen
-</div>
+  </div>
 
   <h1>El Pollo Loco</h1>
 
@@ -77,11 +79,9 @@
   </div>
 
   <div id="canvas-container" class="canvas-container">
-
     <!-- <img src="./img/icons/reset.png" alt="restart_icon" class="restart-icon" id="restartIcon" onclick="startGame()"> -->
 
     <canvas class="canvas" id="canvas" width="720" height="480" style="display:none;"></canvas>
-
   </div>
 
   <div id="mobileIconsContainer" class="mobile-icons-container">
@@ -91,6 +91,21 @@
     <img class="mobile-icons m-bottle" src="./img/mobile_icons/bottle.png" alt="bottle">
   </div>
 
+  <div id="controlsInfo" class="controls-info">
+    <p class="info-text">
+      ← or A – move left<br>
+      → or D – move right<br>
+      ↑, W, or Space – jump<br>
+      F – throw a bottle to attack
+    </p>
+  </div>
+
+  <div class="audio-controls-container" id="audioControllContainer">
+    <button class="toggle-mute-btn muted" id="audioToggleBTN" onclick="AudioHub.toggleMute()">
+      Sound OFF
+    </button>
+  </div>
 
 </body>
+
 </html>

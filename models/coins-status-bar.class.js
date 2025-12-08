@@ -1,16 +1,15 @@
 class CoinStatusBar extends DrawableObject {
-
   COINSTATUSBAR_IMAGES = [
-    'img/7_statusbars/1_statusbar/1_statusbar_coin/blue/0.png',
-    'img/7_statusbars/1_statusbar/1_statusbar_coin/blue/20.png',
-    'img/7_statusbars/1_statusbar/1_statusbar_coin/blue/40.png',
-    'img/7_statusbars/1_statusbar/1_statusbar_coin/blue/60.png',
-    'img/7_statusbars/1_statusbar/1_statusbar_coin/blue/80.png',
-    'img/7_statusbars/1_statusbar/1_statusbar_coin/blue/100.png'
+    "img/7_statusbars/1_statusbar/1_statusbar_coin/blue/0.png",
+    "img/7_statusbars/1_statusbar/1_statusbar_coin/blue/20.png",
+    "img/7_statusbars/1_statusbar/1_statusbar_coin/blue/40.png",
+    "img/7_statusbars/1_statusbar/1_statusbar_coin/blue/60.png",
+    "img/7_statusbars/1_statusbar/1_statusbar_coin/blue/80.png",
+    "img/7_statusbars/1_statusbar/1_statusbar_coin/blue/100.png",
   ];
 
   percent = 0;
-  
+
   constructor() {
     super();
     this.loadImages(this.COINSTATUSBAR_IMAGES);
@@ -20,7 +19,6 @@ class CoinStatusBar extends DrawableObject {
     this.height = 60;
 
     this.setPercent(0);
-
   }
 
   setPercent(percent) {
@@ -44,6 +42,4 @@ class CoinStatusBar extends DrawableObject {
       return 0;
     }
   }
-
 }
-

@@ -1,7 +1,7 @@
 const privacyTexts = {
-    en: {
-        title: "Privacy Policy",
-        content: `
+  en: {
+    title: "Privacy Policy",
+    content: `
             <h3>1. Data Controller</h3>
             <p>The following Privacy Policy outlines the handling of personal data collected through this game. The data controller is:</p>
             <p><strong>Amas Movsisyan</strong><br>Email: amas2017@icloud.com<br>Location: Holzwickede</p>
@@ -19,11 +19,11 @@ const privacyTexts = {
             <h3>7. Contact</h3>
             <p>If you have any questions regarding this Privacy Policy, please contact us at amas2017@icloud.com.</p>
         `,
-        backToHome: "Back to Home"
-    },
-    de: {
-        title: "Datenschutzerklärung",
-        content: `
+    backToHome: "Back to Home",
+  },
+  de: {
+    title: "Datenschutzerklärung",
+    content: `
             <h3>1. Verantwortlicher</h3>
             <p>Diese Datenschutzerklärung beschreibt, wie personenbezogene Daten durch dieses Spiel verarbeitet werden. Der Verantwortliche ist:</p>
             <p><strong>Amas Movsisyan</strong><br>Email: amas2017@icloud.com<br>Standort: Holzwickede</p>
@@ -41,11 +41,11 @@ const privacyTexts = {
             <h3>7. Kontakt</h3>
             <p>Wenn Sie Fragen zu dieser Datenschutzerklärung haben, kontaktieren Sie uns bitte unter amas2017@icloud.com.</p>
         `,
-        backToHome: "Zurück zur Startseite"
-    },
-    es: {
-        title: "Política de Privacidad",
-        content: `
+    backToHome: "Zurück zur Startseite",
+  },
+  es: {
+    title: "Política de Privacidad",
+    content: `
             <h3>1. Controlador de Datos</h3>
             <p>Esta Política de Privacidad describe cómo se manejan los datos personales recopilados a través de este juego. El controlador de los datos es:</p>
             <p><strong>Amas Movsisyan</strong><br>Email: amas2017@icloud.com<br>Ubicación: Holzwickede</p>
@@ -63,17 +63,19 @@ const privacyTexts = {
             <h3>7. Contacto</h3>
             <p>Si tiene alguna pregunta sobre esta Política de Privacidad, contáctenos en amas2017@icloud.com.</p>
         `,
-        backToHome: "Volver al inicio"
-    }
+    backToHome: "Volver al inicio",
+  },
 };
 
 function changeLanguage(lang) {
-    document.title = privacyTexts[lang].title;
-    document.getElementById('privacy-text').innerHTML = privacyTexts[lang].content;
-    document.getElementById('back-to-home-btn').innerText = privacyTexts[lang].backToHome;
-    document.getElementById('policy-title').innerText = privacyTexts[lang].title;
+  document.title = privacyTexts[lang].title;
+  document.getElementById("privacy-text").innerHTML =
+    privacyTexts[lang].content;
+  document.getElementById("back-to-home-btn").innerText =
+    privacyTexts[lang].backToHome;
+  document.getElementById("policy-title").innerText = privacyTexts[lang].title;
 }
 
-window.onload = function() {
-    changeLanguage('en');
-}
+window.onload = function () {
+  changeLanguage("en");
+};

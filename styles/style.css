@@ -5,23 +5,9 @@
     font-style: normal;
 }
 
-*{
+* {
     font-family: 'Luckiest Guy', sans-serif;
     font-weight: 100;
-}
-
-body {
-display: flex;
-flex-direction: column;
-align-items: center;
-
-background-image: url(../img/BG/BG-IMAGE.jpg);
-background-repeat: no-repeat;
-background-size: cover;
-background-position: center;
-background-attachment: fixed;
-min-height: 100vh;
-font-family: 'Luckiest Guy', sans-serif;
 }
 
 html, body {
@@ -30,14 +16,17 @@ html, body {
     overflow-x: hidden;
 }
 
-a{
-    text-decoration: none;
-    color: black;
-    transition: all 0.25s ease-in-out;
-}
-
-a:hover{
-    color: white;
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url(../img/BG/BG-IMAGE.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    font-family: 'Luckiest Guy', sans-serif;
 }
 
 h1 {
@@ -48,6 +37,15 @@ h1 {
     font-size: 72px;
 }
 
+a {
+    text-decoration: none;
+    color: black;
+    transition: all 0.25s ease-in-out;
+}
+
+a:hover {
+    color: white;
+}
 
 .startContainer {
     display: flex;
@@ -68,19 +66,13 @@ h1 {
     background-position: center;
     background-size: contain;
     background-position-y: 0.3px;
-
 }
-
 
 .start-BTN {
     flex: 1;
-    padding-top: 32px;
-    padding-bottom: 32px;
-    padding-left: 28px;
-    padding-right: 28px;
+    padding: 32px 28px;
     border: none;
     outline: none;
-    background: #29abe2;
     background: linear-gradient(180deg, rgb(21, 105, 141) 0%, rgba(107, 197, 235) 100%);
     color: rgb(255, 255, 255);
     text-transform: uppercase;
@@ -90,7 +82,6 @@ h1 {
     display: inline-block;
     position: relative;
     overflow: hidden;
-    transition: all 0.25s ease-in-out;
     border-radius: 6px 6px 0px 0px;
 }
 
@@ -119,18 +110,15 @@ h1 {
 }
 
 .secondery-bg {
-    background: #ff8800;
     background: linear-gradient(180deg, rgba(255, 136, 0, 1) 0%, rgba(120, 42, 0, 1) 100%);
-    padding-top: 27px;
-    padding-bottom: 27px;
-    border-radius: 0px 0px 0px 0px;
+    padding: 27px;
+    border-radius: 0px;
     font-size: 18px;
 }
 
 .secondery-bg::after {
     background-color: #ff8800;
 }
-
 
 .end-menu {
     display: none;
@@ -143,11 +131,10 @@ h1 {
     min-height: 90px;
 }
 
-.end-img-bg{
+.end-img-bg {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
     border-radius: 6px;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 1);
     width: 720px;
@@ -156,18 +143,14 @@ h1 {
     background-image: url(../img/9_intro_outro_screens/game_over/you_won.jpg);
     background-position: center;
     background-size: cover;
-    
 }
 
-.end-BTN{
+.end-BTN {
     flex: 1;
-    padding-top: 16px;
-    padding-bottom: 16px;
-    padding-left: 16px;
-    padding-right: 16px;
+    padding: 16px;
+    margin-top: 128px;
     border: none;
     outline: none;
-    margin-top: 128px;
     background: linear-gradient(180deg, rgb(36, 151, 200) 0%, rgba(107, 197, 235) 100%);
     color: rgb(255, 255, 255);
     text-transform: uppercase;
@@ -177,7 +160,6 @@ h1 {
     display: inline-block;
     position: relative;
     overflow: hidden;
-    transition: all 0.25s ease-in-out;
 }
 
 .end-BTN::after {
@@ -215,11 +197,10 @@ h1 {
     min-height: 90px;
 }
 
-.lost-img-bg{
+.lost-img-bg {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
     border-radius: 6px;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 1);
     width: 720px;
@@ -228,20 +209,18 @@ h1 {
     background-image: url(../img/9_intro_outro_screens/game_over/you_lost.jpg);
     background-position: center;
     background-size: cover;
-    
 }
 
-
-.restart-icon{
+.restart-icon {
     display: none;
 }
 
 .canvas-container {
     position: relative;
-    display: inline-block; 
+    display: inline-block;
 }
 
-.restart-icon{
+.restart-icon {
     width: 50px;
     height: 50px;
     position: absolute;
@@ -258,7 +237,7 @@ h1 {
     opacity: 0.7;
 }
 
-.restart-text{
+.restart-text {
     opacity: 0.7;
     background-color: #0087c6;
     padding: 3px;
@@ -272,12 +251,11 @@ h1 {
     left: 63px;
 }
 
-
 .mobile-icons-container {
     position: fixed;
     inset: 0;
     pointer-events: none;
-    display: none; /* wird durch JS sichtbar */
+    display: none;
     z-index: 999;
 }
 
@@ -289,11 +267,11 @@ h1 {
     pointer-events: auto;
     position: absolute;
     user-select: none;
-    -webkit-user-select: none; 
+    -webkit-user-select: none;
     -webkit-touch-callout: none;
     user-select: none;
     pointer-events: auto;
-    touch-action: none; 
+    touch-action: none;
     transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 
@@ -335,7 +313,7 @@ h1 {
     border: 1px solid red;
 }
 
-.rotation-warning-box{
+.rotation-warning-box {
     position: fixed;
     inset: 0;
     width: 100%;
@@ -358,29 +336,157 @@ canvas {
     display: block;
 }
 
-@media (max-width: 720px) {
-  h1 {
+.controls-info {
+    margin-top: 16px;
+    text-align: center;
+    align-self: center;
+    width: 720px;
+    background-color: rgba(201, 102, 21, 0.927);
+    color: white;
+    font-size: 18px;
+    text-align: left;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    max-width: 720px;
+    display: block;
+}
+
+.info-text {
+    align-self: center;
+    text-align: center;
+}
+
+.audio-controls-container {
     display: none;
-  }
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    pointer-events: none;
+}
+
+#audioToggleBTN {
+    display: none;
+}
+
+.toggle-mute-btn {
+    pointer-events: auto;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Luckiest Guy', sans-serif;
+    font-size: 18px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    color: white;
+    min-width: 140px;
+    text-align: center;
+}
+
+.toggle-mute-btn.muted {
+    background: linear-gradient(180deg, #ff4444 0%, #cc0000 100%);
+}
+
+.toggle-mute-btn.unmuted {
+    background: linear-gradient(180deg, #44ff44 0%, #00cc00 100%);
+}
+
+.toggle-mute-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.toggle-mute-btn:active {
+    transform: translateY(0);
+}
+
+.toggle-mute-btn.muted:hover {
+    background: linear-gradient(180deg, #ff5555 0%, #dd0000 100%);
+}
+
+.toggle-mute-btn.unmuted:hover {
+    background: linear-gradient(180deg, #55ff55 0%, #00dd00 100%);
+}
+
+@media (max-width: 720px) {
+    h1 {
+        display: none;
+    }
+    
+    .controls-info {
+        display: none !important;
+    }
+    
+    .info-text {
+        display: none !important;
+    }
+    
+    .audio-controls-container {
+        bottom: 90px;
+    }
+    
+    .toggle-mute-btn {
+        font-size: 16px;
+        padding: 10px 20px;
+        min-width: 120px;
+    }
+    
+    canvas,
+    .startContainer,
+    .end-menu,
+    .lost-menu {
+        width: 100%;
+    }
+}
+
+@media (max-width: 1080px) and (max-height: 720px) {
+    .controls-info {
+        display: none !important;
+    }
+    
+    .info-text {
+        display: none !important;
+    }
 }
 
 @media (max-height: 720px) {
-  h1 {
-    display: none;
-  }
-}
-
-@media only screen and (max-width: 720px) {
-  canvas,
-  .startContainer,
-  .end-menu,
-  .lost-menu {
-    width: 100%;
-  }
+    h1 {
+        display: none;
+    }
 }
 
 @media only screen and (max-height: 480px) {
-  canvas {
-    height: 100vh;
-  }
+    canvas {
+        height: 100vh;
+    }
+    
+    .audio-controls-container {
+        scale: 0.5;
+        bottom: 5px;
+        left: 50%;
+        transform: translateX(-100%);
+    }
+}
+
+@media (max-width: 480px) {
+    .audio-controls-container {
+        bottom: 80px;
+    }
+    
+    .toggle-mute-btn {
+        font-size: 14px;
+        padding: 8px 16px;
+        min-width: 100px;
+    }
+    
+    .audio-controls button {
+        font-size: 12px;
+        padding: 4px 8px;
+    }
 }

@@ -117,7 +117,6 @@ function home() {
 function endGame() {
     stopAllGameProcesses();
     gameRunning = false;
-    
     document.getElementById('endMenu').style.display = 'block';
     document.getElementById('menu').style.display = 'none';
     document.getElementById('lostMenu').style.display = 'none';
@@ -135,14 +134,12 @@ function lostGame() {
     AudioHub.stop(AudioHub.endBossAttack);
     AudioHub.stop(AudioHub.endBossWalking);
     gameRunning = false;
-    
     document.getElementById('lostMenu').style.display = 'block';
     document.getElementById('menu').style.display = 'none';
     document.getElementById('endMenu').style.display = 'none';
     document.getElementById('canvas').style.display = 'none';
     const audioToggle = document.getElementById('audioToggleBTN');
     if (audioToggle) audioToggle.style.display = 'none';
-    
     rotationCheckDisplay();
     toggleMobileButtons();
 }

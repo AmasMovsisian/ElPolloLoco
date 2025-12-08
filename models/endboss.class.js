@@ -46,7 +46,7 @@ class Endboss extends Movableobject {
   constructor() {
     super().loadImage("img/4_enemie_boss_chicken/2_alert/G5.png");
 
-    this.x = 2600;
+    this.x = 5700;
     this.y = 60;
     this.speed = 5;
 
@@ -91,6 +91,7 @@ class Endboss extends Movableobject {
   updateAnimation() {
     if (this.isDead) {
       this.playAnimation(this.IMAGE_DEAD_END_BOSS);
+      
       this.stopAllBossSounds();
       if (world.character.energy > 0) AudioHub.playOne(AudioHub.characterWon);
       clearInterval(this.animationInterval);
@@ -134,7 +135,7 @@ class Endboss extends Movableobject {
     if (this.energy <= 80 && this.energy > 0) {
       let dist = Math.abs(this.x - world.character.x);
 
-      if (dist <= 120) {
+      if (dist <= 100) {
         if (!this.isKillingActive) this.startKillingMode();
       } else {
         if (this.isKillingActive) this.stopKillingMode();

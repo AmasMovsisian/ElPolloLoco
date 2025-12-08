@@ -64,7 +64,7 @@ class World {
     this.level.enemies.forEach((enemy) => {
       if (enemy.isHitFromTop) return;
       if (this.character.isColliding(enemy)) {
-        AudioHub.playOne(AudioHub.characterHurt);
+         AudioHub.playOne(AudioHub.characterHurt);
         this.character.hit();
         this.statusBar.setPercent(this.character.energy);
       }
@@ -72,6 +72,7 @@ class World {
 
     this.level.endboss.forEach((endboss) => {
       if (this.character.isColliding(endboss)) {
+       
         AudioHub.playOne(AudioHub.characterHurt);
         this.character.hit();
         this.statusBar.setPercent(this.character.energy);
@@ -114,7 +115,7 @@ class World {
     for (let i = this.level.enemies.length - 1; i >= 0; i--) {
       const enemy = this.level.enemies[i];
 
-      if (this.character.isCollidingTop(enemy)) {
+      if (this.character.isCollidingTop(enemy) && this.character.isAboveGround()) {
         enemy.isHitFromTop = true;
         enemy.enemyWasHit();
         if (enemy instanceof Chicken) {

@@ -131,6 +131,9 @@ function endGame() {
 
 function lostGame() {
     stopAllGameProcesses();
+    AudioHub.playOne(AudioHub.characterLost);
+    AudioHub.stop(AudioHub.endBossAttack);
+    AudioHub.stop(AudioHub.endBossWalking);
     gameRunning = false;
     
     document.getElementById('lostMenu').style.display = 'block';

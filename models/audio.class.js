@@ -47,7 +47,7 @@ class AudioHub {
     AudioHub.bgSound,
   ];
 
-  // Mute-Status und gespeicherte Lautstärke
+
   static isMuted = false;
   static savedVolume = 0.2;
 

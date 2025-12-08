@@ -51,6 +51,7 @@ class Character extends Movableobject {
   world;
 
   isWalkingSoundPlaying = false;
+  
 
   constructor() {
     super().loadImage("img/2_character_pepe/2_walk/W-21.png");
@@ -99,7 +100,6 @@ class Character extends Movableobject {
       if (this.isHurt()) {
         this.playAnimation(this.IMAGE_HURT);
       } else if (this.isDead()) {
-        AudioHub.playOne(AudioHub.characterLost);
         this.playOnceAnimation(this.IMAGE_DEAD);
       } else if (this.isAboveGround()) {
         this.playAnimation(this.IMAGE_JUMP);
@@ -110,4 +110,7 @@ class Character extends Movableobject {
       }
     }, 1000 / 24);
   }
+
+
+
 }

@@ -33,78 +33,73 @@
 
 <body>
 
-  <div id="rotationWarningBox" class="rotation-warning-box">
-    Bitte das Gerät drehen
-  </div>
+  <main class="content-limitation">
 
-  <h1>El Pollo Loco</h1>
+    <section id="rotationWarningBox" class="rotation-warning-box">
+      Bitte das Gerät drehen
+    </section>
 
-  <div id="menu">
-    <div class="startContainer">
-      <div class="start-img-bg">
+    <header>
+      <h1>El Pollo Loco</h1>
+    </header>
 
-        <button class="start-BTN secondery-bg"><a href="./privacy-policy.html" target="_blank"><span>privacy
-              policy</span></a></button>
-        <button class="start-BTN" onclick="startGame()"><span>PLAY</span></button>
-        <button class="start-BTN secondery-bg"><a href="./about-game.html" target="_blank"><span>About
-              Game</span></a></button>
-
+    <section id="menu">
+      <div class="startContainer">
+        <div class="start-img-bg">
+          <button class="start-BTN secondery-bg"><a href="./privacy-policy.html"><span>privacy policy</span></a></button>
+          <button class="start-BTN" onclick="startGame()"><span>PLAY</span></button>
+          <button class="start-BTN secondery-bg"><a href="./about-game.html"><span>About Game</span></a></button>
+        </div>
       </div>
+    </section>
+
+    <section id="endMenu" class="end-menu">
+      <div class="end-container">
+        <div class="end-img-bg">
+          <button class="end-BTN" onclick="home()">Back to Home</button>
+          <button class="end-BTN" onclick="startGame()">Play again</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="lostMenu" class="lost-menu">
+      <div class="lost-container">
+        <div class="lost-img-bg">
+          <button class="end-BTN" onclick="home()">Back to Home</button>
+          <button class="end-BTN" onclick="startGame()">Play again</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="canvas-container" class="canvas-container">
+      <img src="./img/icons/reset.png" alt="restart_icon" class="restart-icon" id="restartIcon" onclick="startGame()">
+      <canvas class="canvas" id="canvas" width="720" height="480" style="display:none;"></canvas>
+    </section>
+
+    <div id="mobileIconsContainer" class="mobile-icons-container">
+      <img class="mobile-icons m-left" src="./img/mobile_icons/left-chevron.png" alt="left">
+      <img class="mobile-icons m-right" src="./img/mobile_icons/right-chevron.png" alt="right">
+      <img class="mobile-icons m-jump" src="./img/mobile_icons/jump.png" alt="jump">
+      <img class="mobile-icons m-bottle" src="./img/mobile_icons/bottle.png" alt="bottle">
     </div>
 
-  </div>
+    <section id="controlsInfo" class="controls-info">
+      <p class="info-text">
+        ← or A – Move Left<br>
+        → or D – Move Right<br>
+        ↑, W, or Space – Jump<br>
+        F – Throw Bottle<br>
+        <span class="important-text-style">Important! <br>(Next bottle throw is only possible after 2 seconds!)</span>
+      </p>
+    </section>
 
-  <div id="endMenu" class="end-menu">
-    <div class="end-container">
-      <div class="end-img-bg">
+    <section class="audio-controls-container" id="audioControllContainer">
+      <button class="toggle-mute-btn muted" id="audioToggleBTN" onclick="AudioHub.toggleMute()">
+        Sound OFF
+      </button>
+    </section>
 
-        <button class="end-BTN" onclick="home()">Back to Home</button>
-        <button class="end-BTN" onclick="startGame()">Play again</button>
-
-      </div>
-    </div>
-
-  </div>
-
-  <div id="lostMenu" class="lost-menu">
-    <div class="lost-container">
-      <div class="lost-img-bg">
-
-        <button class="end-BTN" onclick="home()">Back to Home</button>
-        <button class="end-BTN" onclick="startGame()">Play again</button>
-
-      </div>
-    </div>
-
-  </div>
-
-  <div id="canvas-container" class="canvas-container">
-  <img src="./img/icons/reset.png" alt="restart_icon" class="restart-icon" id="restartIcon" onclick="startGame()">
-
-    <canvas class="canvas" id="canvas" width="720" height="480" style="display:none;"></canvas>
-  </div>
-
-  <div id="mobileIconsContainer" class="mobile-icons-container">
-    <img class="mobile-icons m-left" src="./img/mobile_icons/left-chevron.png" alt="left">
-    <img class="mobile-icons m-right" src="./img/mobile_icons/right-chevron.png" alt="right">
-    <img class="mobile-icons m-jump" src="./img/mobile_icons/jump.png" alt="jump">
-    <img class="mobile-icons m-bottle" src="./img/mobile_icons/bottle.png" alt="bottle">
-  </div>
-
-  <div id="controlsInfo" class="controls-info">
-    <p class="info-text">
-      ← or A – move left<br>
-      → or D – move right<br>
-      ↑, W, or Space – jump<br>
-      F – throw a bottle to attack
-    </p>
-  </div>
-
-  <div class="audio-controls-container" id="audioControllContainer">
-    <button class="toggle-mute-btn muted" id="audioToggleBTN" onclick="AudioHub.toggleMute()">
-      Sound OFF
-    </button>
-  </div>
+  </main>
 
 </body>
 

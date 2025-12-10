@@ -1,5 +1,4 @@
 let level1;
-
 function initLevel1() {
 
 level1 = new Level(
@@ -7,23 +6,21 @@ level1 = new Level(
     new Chicken(),
     new Chicken(),
     new Chicken(),
-     new Chicken(),
-    new Chicken(),
-    new Chicken(),
-     new Chicken(),
     new Chicken(),
     new Chicken(),
     new Chicken(),
     new Chicken(),
     new Chicken(),
-     new Chicken(),
     new Chicken(),
     new Chicken(),
-     new Chicken(),
     new Chicken(),
     new Chicken(),
-
-
+    new Chicken(),
+    new Chicken(),
+    new Chicken(),
+    new Chicken(),
+    new Chicken(),
+    new Chicken(),
     new SmallChicken(),
     new SmallChicken(),
     new SmallChicken(),
@@ -96,7 +93,6 @@ level1 = new Level(
     new Bottles(),
     new Bottles(),
     new Bottles(),
-
   ],
 
 

@@ -116,6 +116,7 @@ function home() {
 
 function endGame() {
     stopAllGameProcesses();
+    AudioHub.stopAllCharacterSounds();
     gameRunning = false;
     document.getElementById('endMenu').style.display = 'block';
     document.getElementById('menu').style.display = 'none';
@@ -123,9 +124,9 @@ function endGame() {
     document.getElementById('canvas').style.display = 'none';
     const audioToggle = document.getElementById('audioToggleBTN');
     if (audioToggle) audioToggle.style.display = 'none';
-    
     rotationCheckDisplay();
     toggleMobileButtons();
+    AudioHub.stopAllCharacterSounds();
 }
 
 function lostGame() {
@@ -133,6 +134,7 @@ function lostGame() {
     AudioHub.playOne(AudioHub.characterLost);
     AudioHub.stop(AudioHub.endBossAttack);
     AudioHub.stop(AudioHub.endBossWalking);
+    AudioHub.stopAllCharacterSounds();
     gameRunning = false;
     document.getElementById('lostMenu').style.display = 'block';
     document.getElementById('menu').style.display = 'none';
@@ -166,48 +168,59 @@ window.addEventListener("load", function() {
     }
 });
 
+let canThrow = true;
+
+const setKey = (key, value) => {
+    if (typeof keyboard !== 'undefined' && keyboard) keyboard[key] = value;
+};
+
+function allowThrowLater() {
+    canThrow = false;
+    setTimeout(() => canThrow = true, 100);
+}
+
+function handleThrowKey() {
+    if (!canThrow) return;
+    setKey('F', true);
+    allowThrowLater();
+}
+
+function handleThrowTouch() {
+    if (!canThrow) return;
+    setKey('F', true);
+    allowThrowLater();
+}
+
+function addTouchControl(element, key) {
+    if (!element) return;
+    element.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        if (key === 'F') return handleThrowTouch();
+        setKey(key, true);
+    }, { passive: false });
+    element.addEventListener('touchend', (e) => { e.preventDefault(); setKey(key, false); }, { passive: false });
+    element.addEventListener('touchcancel', (e) => { e.preventDefault(); setKey(key, false); }, { passive: false });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const leftBtn = document.querySelector('.m-left');
     const rightBtn = document.querySelector('.m-right');
     const jumpBtn = document.querySelector('.m-jump');
     const bottleBtn = document.querySelector('.m-bottle');
-    
-    const setKey = (key, value) => {
-        if (keyboard) keyboard[key] = value;
-    };
-    
-    const addTouchControl = (element, key) => {
-        if (!element) return;
-        
-        element.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            setKey(key, true);
-        }, { passive: false });
-        
-        element.addEventListener('touchend', (e) => {
-            e.preventDefault();
-            setKey(key, false);
-        }, { passive: false });
-        
-        element.addEventListener('touchcancel', (e) => {
-            e.preventDefault();
-            setKey(key, false);
-        }, { passive: false });
-    };
-    
+
     addTouchControl(leftBtn, 'LEFT');
     addTouchControl(rightBtn, 'RIGHT');
     addTouchControl(jumpBtn, 'UP');
     addTouchControl(bottleBtn, 'F');
-    
+
     window.addEventListener('keydown', (e) => {
+        if (e.code === "KeyF") return handleThrowKey();
         if (e.code == "ArrowLeft" || e.code == "KeyA") setKey('LEFT', true);
         if (e.code == "ArrowRight" || e.code == "KeyD") setKey('RIGHT', true);
         if (e.code == "ArrowUp" || e.code == "KeyW" || e.code == "Space") setKey('UP', true);
         if (e.code == "ArrowDown" || e.code == "KeyS") setKey('DOWN', true);
-        if (e.code == "KeyF") setKey('F', true);
     });
-    
+
     window.addEventListener('keyup', (e) => {
         if (e.code == "ArrowLeft" || e.code == "KeyA") setKey('LEFT', false);
         if (e.code == "ArrowRight" || e.code == "KeyD") setKey('RIGHT', false);

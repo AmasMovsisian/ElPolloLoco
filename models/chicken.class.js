@@ -5,6 +5,12 @@ class Chicken extends Movableobject {
   isDead = false;
   isHitFromTop = false;
   isHitFromBottle = false;
+  offset = {
+    top: 0,
+    bottom: 15,
+    left: 10,
+    right: 10,
+  };
 
   IMAGES_WALKING_CHICKEN = [
     "img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",

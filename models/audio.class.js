@@ -5,6 +5,7 @@ class AudioHub {
   static characterDied = new Audio("audio/character-died.mp3");
   static characterLost = new Audio("audio/character-lost.mp3");
   static characterWon = new Audio("audio/character-won.mp3");
+  static characterSnoring = new Audio("audio/character-snoring.mp3");
 
   static bottleCollect = new Audio("audio/bottle-collect.mp3");
   static bottleHit = new Audio("audio/bottle-hit-break.mp3");
@@ -29,6 +30,7 @@ class AudioHub {
     AudioHub.characterDied,
     AudioHub.characterLost,
     AudioHub.characterWon,
+    AudioHub.characterSnoring,
 
     AudioHub.bottleCollect,
     AudioHub.bottleHit,
@@ -47,14 +49,24 @@ class AudioHub {
     AudioHub.bgSound,
   ];
 
+  static stopAllCharacterSounds() { setInterval(() => {
+     [
+    this.characterWalking, this.characterJump, this.characterHurt, this.characterDied,
+    this.characterSnoring, this.bottleCollect, this.bottleHit, this.bottleThrow,
+    this.coinCollect, this.chickenHurt, this.smallChickenHurt,
+    this.endBossHurt, this.endBossAttack, this.endBossWalking
+  ].forEach(s => { s.pause(); s.currentTime = 0; });
 
-  static isMuted = false;
-  static savedVolume = 0.2;
+  }, 100);
+ 
+}
+
+
+  static isMuted = localStorage.getItem("isMuted") === "true" || false;
+  static savedVolume = parseFloat(localStorage.getItem("volume")) || 0.2;
 
   static playOne(sound) {
-    if (this.isMuted) {
-      return;
-    }
+    if (this.isMuted) return;
     sound.volume = this.savedVolume;
     sound.currentTime = 0;
     sound.play();
@@ -62,6 +74,7 @@ class AudioHub {
 
   static toggleMute() {
     this.isMuted = !this.isMuted;
+    localStorage.setItem("isMuted", this.isMuted);
 
     if (this.isMuted) {
       AudioHub.allSounds.forEach((sound) => {
@@ -69,7 +82,6 @@ class AudioHub {
         sound.currentTime = 0;
         sound.volume = 0;
       });
-
       const muteBtn = document.querySelector(".toggle-mute-btn");
       if (muteBtn) {
         muteBtn.textContent = "Sound ON";
@@ -80,7 +92,6 @@ class AudioHub {
       AudioHub.allSounds.forEach((sound) => {
         sound.volume = this.savedVolume;
       });
-
       const muteBtn = document.querySelector(".toggle-mute-btn");
       if (muteBtn) {
         muteBtn.textContent = "Sound OFF";
@@ -97,9 +108,7 @@ class AudioHub {
     const instrumentImages = document.querySelectorAll(".sound_img");
     if (instrumentImages.length > 0) {
       instrumentImages.forEach((img) => {
-        if (this.isMuted) {
-          img.classList.remove("active");
-        }
+        if (this.isMuted) img.classList.remove("active");
       });
     }
 
@@ -109,14 +118,13 @@ class AudioHub {
   static stopOne(sound, instrumentId) {
     sound.pause();
     const instrumentImg = document.getElementById(instrumentId);
-    if (instrumentImg) {
-      instrumentImg.classList.remove("active");
-    }
+    if (instrumentImg) instrumentImg.classList.remove("active");
   }
 
   static objSetVolume(volumeSliderID) {
     let currentVolumeValue = document.getElementById(volumeSliderID).value;
     this.savedVolume = currentVolumeValue;
+    localStorage.setItem("volume", currentVolumeValue);
 
     if (!this.isMuted) {
       AudioHub.allSounds.forEach((sound) => {
@@ -126,9 +134,7 @@ class AudioHub {
   }
 
   static playLoop(sound) {
-    if (this.isMuted) {
-      return;
-    }
+    if (this.isMuted) return;
     sound.loop = true;
     if (sound.paused) {
       sound.volume = this.savedVolume;
@@ -144,4 +150,28 @@ class AudioHub {
   static checkMuteStatus() {
     return this.isMuted;
   }
+
+
+  static applySavedSettings() {
+    if (this.isMuted) {
+      AudioHub.allSounds.forEach((sound) => (sound.volume = 0));
+    } else {
+      AudioHub.allSounds.forEach((sound) => (sound.volume = this.savedVolume));
+    }
+
+    const muteBtn = document.querySelector(".toggle-mute-btn");
+    if (muteBtn) {
+      muteBtn.textContent = this.isMuted ? "Sound ON" : "Sound OFF";
+      muteBtn.classList.toggle("muted", !this.isMuted);
+      muteBtn.classList.toggle("unmuted", this.isMuted);
+    }
+
+    const volumeElement = document.getElementById("volume");
+    if (volumeElement) volumeElement.value = this.isMuted ? 0 : this.savedVolume;
+  }
 }
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  AudioHub.applySavedSettings();
+});

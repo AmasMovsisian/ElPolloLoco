@@ -17,6 +17,7 @@ html, body {
     background: linear-gradient(180deg, rgba(255, 136, 0, 1) 0%, rgba(120, 42, 0, 1) 100%);
 }
 
+
 body {
     display: flex;
     flex-direction: column;
@@ -30,12 +31,15 @@ body {
     font-family: 'Luckiest Guy', sans-serif;
 }
 
+
+
 h1 {
+    text-align: center;
     color: white;
     text-shadow: 2px 2px 4px #000000;
     text-transform: uppercase;
-    margin-bottom: 32px;
-    font-size: 72px;
+    margin-bottom: 18px;
+    font-size: 64px;
 }
 
 a {
@@ -46,6 +50,10 @@ a {
 
 a:hover {
     color: white;
+}
+
+.important-text-style{
+    color: #ffe100;
 }
 
 .startContainer {
@@ -67,6 +75,7 @@ a:hover {
     background-position: center;
     background-size: contain;
     background-position-y: 0.3px;
+    max-height: 100vh;
 }
 
 .start-BTN {
@@ -144,6 +153,7 @@ a:hover {
     background-image: url(../img/9_intro_outro_screens/game_over/you_won.jpg);
     background-position: center;
     background-size: cover;
+    max-height: 100vh;
 }
 
 .end-BTN {
@@ -210,6 +220,7 @@ a:hover {
     background-image: url(../img/9_intro_outro_screens/game_over/you_lost.jpg);
     background-position: center;
     background-size: cover;
+    max-height: 100vh;
 }
 
 .restart-icon {
@@ -376,7 +387,7 @@ canvas {
 
 .toggle-mute-btn {
     pointer-events: auto;
-    padding: 12px 24px;
+    padding: 6px 18px;
     border: none;
     border-radius: 6px;
     font-family: 'Luckiest Guy', sans-serif;

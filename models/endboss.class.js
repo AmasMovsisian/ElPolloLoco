@@ -1,6 +1,12 @@
 class Endboss extends Movableobject {
   height = 400;
   width = 250;
+  offset = {
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+  };
 
   IMAGE_WALKING_END_BOSS = [
     "img/4_enemie_boss_chicken/1_walk/G1.png",
@@ -57,7 +63,12 @@ class Endboss extends Movableobject {
     this.currentSound = null;
     this.isReallyWalking = false;
 
-    this.offset = { top: 15, bottom: 15, left: 15, right: 15 };
+    this.offset = {
+      top: 50,
+      bottom: 15,
+      left: 30,
+      right: 30,
+    };
 
     this.loadImages(this.IMAGE_ALERT_END_BOSS);
     this.loadImages(this.IMAGE_WALKING_END_BOSS);
@@ -91,11 +102,13 @@ class Endboss extends Movableobject {
   updateAnimation() {
     if (this.isDead) {
       this.playAnimation(this.IMAGE_DEAD_END_BOSS);
-      
+
       this.stopAllBossSounds();
-      if (world.character.energy > 0) AudioHub.playOne(AudioHub.characterWon);
+      if (world.character.energy > 0) 
+        AudioHub.playOne(AudioHub.characterWon);
       clearInterval(this.animationInterval);
       clearInterval(this.movementInterval);
+      AudioHub.stop(AudioHub.characterSnoring);
       return;
     }
 
@@ -128,14 +141,17 @@ class Endboss extends Movableobject {
   }
 
   updateMovement() {
-    if (this.isDead) return;
+    if (this.isDead) {
+       return;
+    }
+   
 
     let before = this.x;
 
     if (this.energy <= 80 && this.energy > 0) {
       let dist = Math.abs(this.x - world.character.x);
 
-      if (dist <= 100) {
+      if (dist <= 50) {
         if (!this.isKillingActive) this.startKillingMode();
       } else {
         if (this.isKillingActive) this.stopKillingMode();

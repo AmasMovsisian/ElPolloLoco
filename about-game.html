@@ -6,17 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>About the Game</title>
     <link rel="stylesheet" href="./styles/about-game.css">
-    <script src="./js/about-game.js"></script>
 </head>
 
 <body>
     <header>
         <h1>About the Game</h1>
-        <div class="language-switcher">
-            <button class="AB-BTN" onclick="changeLanguage('en')">English</button>
-            <button class="AB-BTN" onclick="changeLanguage('de')">Deutsch</button>
-            <button class="AB-BTN" onclick="changeLanguage('es')">Español</button>
-        </div>
     </header>
 
     <main>
@@ -37,6 +31,9 @@
                 <li>Use keyboard or touch controls to move, jump, and attack.</li>
                 <li>Collect coins and bottles to increase your resources.</li>
                 <li>Avoid or defeat enemies by jumping on them or throwing a bottle.</li>
+                <li>Endboss attack after you've hit twice with bottles</li>
+                <li>Important! Next bottle throw is only possible after 2 seconds!</li>
+                <li>If the character is hurt, he cannot jump during that moment</li>
                 <li>Keep an eye on your health bar – if it reaches zero, the game is over.</li>
                 <li>You can mute all sounds at any time using the mute button.</li>
                 <li>After a game over, you can restart or return to the home screen.</li>
@@ -46,10 +43,11 @@
         <section id="controls">
             <h2>Controls</h2>
             <ul>
-                <li><span style="font-size:1.5em;">←</span> or <strong>A</strong> – move left</li>
-                <li><span style="font-size:1.5em;">→</span> or <strong>D</strong> – move right</li>
-                <li><span style="font-size:1.5em;">↑</span>, <strong>W</strong>, or <strong>Space</strong> – jump</li>
-                <li><strong>F</strong> – throw a bottle to attack</li>
+                <li>← or A – move left</li>
+                <li>→ or D – move right</li>
+                <li>↑, W, or Space – jump</li>
+                <li>F – throw a bottle (attack)</li>
+                <li>Next bottle throw is only possible after 3 seconds</li>
             </ul>
         </section>
 
@@ -58,7 +56,7 @@
             <p>
                 This game was created as a coding project.
                 For more details about the provider, privacy, and legal information, check out our
-                <a href="./privacy-policy.html" style="color:#ffcc00;">Privacy Policy</a>.
+                <a href="./privacy-policy.html">Privacy Policy</a>.
             </p>
         </section>
 

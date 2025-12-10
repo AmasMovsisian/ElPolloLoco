@@ -6,6 +6,13 @@ class SmallChicken extends Movableobject {
   isHitFromTop = false;
   isHitFromBottle = false;
 
+  offset = {
+    top: 5,
+    bottom: 5,
+    left: 13,
+    right: 13,
+  };
+
   IMAGE_DEAD_SMALL_CHICKEN = [
     "img/3_enemies_chicken/chicken_small/2_dead/dead.png",
   ];

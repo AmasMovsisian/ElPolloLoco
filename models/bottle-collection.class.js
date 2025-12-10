@@ -21,7 +21,7 @@ class Bottles extends Movableobject {
     const randomImage = this.IMAGES_BOTTLES[randomIndex];
     this.loadImage(randomImage);
     this.loadImages(this.IMAGES_BOTTLES);
-    this.x = 800 + Math.random() * 4200;
+    this.x = 800 + Math.random() * 9000;
     this.y = 360;
   }
 }

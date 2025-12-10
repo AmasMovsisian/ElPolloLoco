@@ -56,7 +56,7 @@ class Endboss extends Movableobject {
 
   constructor() {
     super().loadImage("img/4_enemie_boss_chicken/2_alert/G5.png");
-    this.x = 5700;
+    this.x = 10000;
     this.y = 60;
     this.speed = 5;
     this.energy = 100;
@@ -119,7 +119,7 @@ class Endboss extends Movableobject {
     clearInterval(this.movementInterval);
     AudioHub.stopAllCharacterSounds();
     if (typeof endGame === 'function') endGame();
-  }, 1500);
+  }, 500);
 }
 
 

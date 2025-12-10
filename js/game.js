@@ -181,7 +181,7 @@ const setKey = (key, value) => {
 
 function allowThrowLater() {
     canThrow = false;
-    setTimeout(() => canThrow = true, 100);
+    setTimeout(() => canThrow = true, 2000);
 }
 
 

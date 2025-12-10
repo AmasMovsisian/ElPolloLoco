@@ -19,7 +19,7 @@ class World {
   gameIntervals = [];
   isGameRunning = true;
 
-  
+
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
@@ -98,22 +98,29 @@ class World {
   }
 
 
-  checkCollisionsTop() {
-    if (!this.isGameRunning) return;
-    for (let i = this.level.enemies.length - 1; i >= 0; i--) {
-      const enemy = this.level.enemies[i];
-      if (this.character.isCollidingTop(enemy) && this.character.isAboveGround()) {
-        enemy.isHitFromTop = true;
-        enemy.enemyWasHit();
-        if (enemy instanceof Chicken) AudioHub.playOne(AudioHub.chickenHurt);
-        if (enemy instanceof SmallChicken) AudioHub.playOne(AudioHub.smallChickenHurt);
-        this.isHitFromBottle = true;
-        setTimeout(() => {
-          if (this.isGameRunning) this.level.enemies.splice(i, 1);
-        }, 200);
-      }
-    }
+checkCollisionsTop() {
+  if (!this.isGameRunning) return;
+  const hitEnemies = this.level.enemies.filter(e => 
+    this.character.isCollidingTop(e) && this.character.isAboveGround()
+  );
+  hitEnemies.forEach(e => this.hitEnemy(e));
+  setTimeout(() => this.removeEnemies(hitEnemies), 200);
+}
+
+
+hitEnemy(enemy) {
+  enemy.isHitFromTop = true;
+  enemy.enemyWasHit();
+  AudioHub.playOne(enemy instanceof Chicken ? AudioHub.chickenHurt : AudioHub.smallChickenHurt);
+  this.isHitFromBottle = true;
+}
+
+
+removeEnemies(enemies) {
+  if (this.isGameRunning) {
+    this.level.enemies = this.level.enemies.filter(e => !enemies.includes(e));
   }
+}
 
 
 checkBottleEnemyCollisions() {

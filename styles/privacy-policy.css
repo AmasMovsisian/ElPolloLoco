@@ -1,12 +1,11 @@
 body {
     margin: 0;
     padding: 0;
-    background-image: url(../img/BG/BG-IMAGE.jpg);
+    background-image: url(../img/BG/BG-IMAGE_ABOUT_GAME-PP.jpg);
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    backdrop-filter: blur(2px);
     color: #ffffff;
     text-shadow: 0 0 4px #000;
 }

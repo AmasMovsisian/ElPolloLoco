@@ -1,3 +1,7 @@
+/**
+ * Represents the bottle status bar UI element.
+ * Displays the current bottle count using a segmented progress bar.
+ */
 class BottleStatusBar extends DrawableObject {
   bottlesToThrow = 0;
 
@@ -12,6 +16,9 @@ class BottleStatusBar extends DrawableObject {
   ];
 
 
+  /**
+   * Initializes the bottle status bar with default position and empty state.
+   */
   constructor() {
     super();
     this.loadImages(this.BOTTLESTATUSBAR_IMAGES);
@@ -23,6 +30,10 @@ class BottleStatusBar extends DrawableObject {
   }
 
 
+  /**
+   * Updates the status bar image based on current bottle percentage.
+   * @param {number} percentOfBottles - Percentage of bottles collected (0-100).
+   */
   setPercent(percentOfBottles) {
     this.percentOfBottles = percentOfBottles;
     let path = this.BOTTLESTATUSBAR_IMAGES[this.resolveImageIndex()];
@@ -30,6 +41,10 @@ class BottleStatusBar extends DrawableObject {
   }
 
 
+  /**
+   * Determines which status bar image to display based on percentage.
+   * @returns {number} Index of the appropriate image in BOTTLESTATUSBAR_IMAGES.
+   */
   resolveImageIndex() {
     if (this.percentOfBottles >= 80) {
       return 5;

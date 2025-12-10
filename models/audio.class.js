@@ -1,3 +1,7 @@
+/**
+ * Central audio management hub for handling all game sounds.
+ * Provides static methods for playing, stopping, and controlling audio.
+ */
 class AudioHub {
   static characterWalking = new Audio("audio/character-walking-on-sand.mp3");
   static characterJump = new Audio("audio/character-jump.mp3");
@@ -37,10 +41,18 @@ class AudioHub {
     AudioHub.bgSound,
   ];
 
+
+  /**
+   * Stops all game sounds and resets their playback position.
+   */
   static stopAllSounds() {
   this.allSounds.forEach(s => (s.pause(), s.currentTime = 0));
   }
 
+
+  /**
+   * Stops all character-related sounds and sound effects.
+   */
   static stopAllCharacterSounds() {
     const sounds = [
       this.characterWalking, this.characterJump, this.characterHurt,
@@ -53,6 +65,10 @@ class AudioHub {
   }
 
 
+  /**
+   * Plays a single sound effect once from the beginning.
+   * @param {HTMLAudioElement} sound - The audio element to play.
+   */
   static playOne(sound) {
     if (this.isMuted) return;
     sound.volume = this.savedVolume;
@@ -61,6 +77,11 @@ class AudioHub {
   }
 
 
+  /**
+   * Stops a specific sound and deactivates its visual indicator.
+   * @param {HTMLAudioElement} sound - The audio element to stop.
+   * @param {string} instrumentId - ID of the associated instrument image element.
+   */
   static stopOne(sound, instrumentId) {
     sound.pause();
     const instrumentImg = document.getElementById(instrumentId);
@@ -68,6 +89,10 @@ class AudioHub {
   }
 
 
+  /**
+   * Plays a sound in a continuous loop.
+   * @param {HTMLAudioElement} sound - The audio element to loop.
+   */
   static playLoop(sound) {
     if (this.isMuted) return;
     sound.loop = true;
@@ -78,19 +103,13 @@ class AudioHub {
   }
 
 
+  /**
+   * Stops and resets a specific sound.
+   * @param {HTMLAudioElement} sound - The audio element to stop.
+   */
   static stop(sound) {
     sound.pause();
     sound.currentTime = 0;
-  }
-
-  
-  static checkMuteStatus() {
-    return this.isMuted;
-  }
-
-
-  static checkMuteStatus() {
-    return this.isMuted;
   }
 
 
@@ -98,6 +117,10 @@ class AudioHub {
   static savedVolume = parseFloat(localStorage.getItem("volume")) || 0.2;
 
 
+  /**
+   * Toggles mute state for all sounds.
+   * @returns {boolean} The new mute state.
+   */
   static toggleMute() {
     this.isMuted = !this.isMuted;
     localStorage.setItem("isMuted", this.isMuted);
@@ -108,12 +131,18 @@ class AudioHub {
   }
 
 
+  /**
+   * Updates volume for all sounds based on current mute state.
+   */
   static updateAllSounds() {
     const volume = this.isMuted ? 0 : this.savedVolume;
     AudioHub.allSounds.forEach((sound) => (sound.volume = volume));
   }
 
 
+  /**
+   * Updates the mute button text and visual state.
+   */
   static updateMuteButton() {
     const muteBtn = document.querySelector(".toggle-mute-btn");
     if (!muteBtn) return;
@@ -123,6 +152,9 @@ class AudioHub {
   }
 
 
+  /**
+   * Deactivates all instrument sound images when muted.
+   */
   static updateInstrumentImages() {
     document.querySelectorAll(".sound_img").forEach((img) => {
       if (this.isMuted) img.classList.remove("active");
@@ -130,6 +162,9 @@ class AudioHub {
   }
 
 
+  /**
+   * Applies saved volume and mute settings from localStorage.
+   */
   static applySavedSettings() {
     this.updateAllSounds();
     this.updateMuteButton();

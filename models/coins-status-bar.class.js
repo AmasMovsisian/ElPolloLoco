@@ -1,3 +1,7 @@
+/**
+ * Represents the coin collection status bar UI element.
+ * Displays progress of collected coins using a segmented bar.
+ */
 class CoinStatusBar extends DrawableObject {
   COINSTATUSBAR_IMAGES = [
     "img/7_statusbars/1_statusbar/1_statusbar_coin/blue/0.png",
@@ -12,6 +16,9 @@ class CoinStatusBar extends DrawableObject {
   percent = 0;
 
 
+  /**
+   * Initializes the coin status bar with default position and empty state.
+   */
   constructor() {
     super();
     this.loadImages(this.COINSTATUSBAR_IMAGES);
@@ -23,6 +30,10 @@ class CoinStatusBar extends DrawableObject {
   }
 
 
+  /**
+   * Updates the status bar image based on current coin collection percentage.
+   * @param {number} percent - Percentage of coins collected (0-100).
+   */
   setPercent(percent) {
     this.percent = percent;
     let path = this.COINSTATUSBAR_IMAGES[this.resolveImageIndex()];
@@ -30,6 +41,10 @@ class CoinStatusBar extends DrawableObject {
   }
 
 
+  /**
+   * Determines which status bar image to display based on percentage.
+   * @returns {number} Index of the appropriate image in COINSTATUSBAR_IMAGES.
+   */
   resolveImageIndex() {
     if (this.percent >= 80) {
       return 5;

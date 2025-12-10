@@ -1,3 +1,7 @@
+/**
+ * Represents a collectible bottle object in the game world.
+ * Extends Movableobject and randomly selects between bottle variations.
+ */
 class Bottles extends Movableobject {
   width = 60;
   height = 60;
@@ -15,6 +19,9 @@ class Bottles extends Movableobject {
   ];
 
 
+  /**
+   * Creates a new bottle instance with random appearance and position.
+   */
   constructor() {
     super();
     const randomIndex = Math.floor(Math.random() * this.IMAGES_BOTTLES.length);

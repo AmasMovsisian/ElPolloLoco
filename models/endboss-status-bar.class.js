@@ -1,3 +1,7 @@
+/**
+ * Represents the end boss health status bar UI element.
+ * Displays the end boss's remaining health and triggers win sequence.
+ */
 class EndbossStatusBar extends DrawableObject {
   IMAGES_ENDBOSS_HEALTH = [
     "img/7_statusbars/2_statusbar_endboss/blue/blue0.png",
@@ -14,6 +18,9 @@ class EndbossStatusBar extends DrawableObject {
   deathTimeout = null;
 
 
+  /**
+   * Initializes the end boss status bar with full health.
+   */
   constructor() {
     super();
     this.loadImage("img/7_statusbars/2_statusbar_endboss/blue/blue100.png");
@@ -26,6 +33,9 @@ class EndbossStatusBar extends DrawableObject {
   }
 
 
+  /**
+   * Starts the death sequence when end boss health reaches zero.
+   */
   startDeathSequence() {
     if (!gameRunning) return;
     this.deathSequenceStarted = true;
@@ -37,6 +47,10 @@ class EndbossStatusBar extends DrawableObject {
   }
 
 
+  /**
+   * Updates the status bar image based on current energy level.
+   * @param {number} energy - Current health of the end boss (0-100).
+   */
   setPercent(energy) {
     this.energy = energy;
     let path = this.IMAGES_ENDBOSS_HEALTH[this.resolveImageIndex()];
@@ -47,6 +61,10 @@ class EndbossStatusBar extends DrawableObject {
   }
 
 
+  /**
+   * Determines which status bar image to display based on energy percentage.
+   * @returns {number} Index of the appropriate image in IMAGES_ENDBOSS_HEALTH.
+   */
   resolveImageIndex() {
     if (this.energy == 100) {
       return 5;
@@ -64,14 +82,9 @@ class EndbossStatusBar extends DrawableObject {
   }
 
 
-  startDeathSequence() {
-    this.deathSequenceStarted = true;
-    setTimeout(() => {
-      this.GameWon();
-    }, 1500);
-  }
-
-
+  /**
+   * Triggers the game won sequence after a short delay.
+   */
   GameWon() {
     if (this.energy == 0) {
       endGame();

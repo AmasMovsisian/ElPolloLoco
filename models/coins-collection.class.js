@@ -1,3 +1,7 @@
+/**
+ * Represents a collectible coin object.
+ * Features an animated spinning effect and random placement.
+ */
 class Coin extends Movableobject {
   height = 120;
   width = 120;
@@ -14,6 +18,9 @@ class Coin extends Movableobject {
   COIN_IMAGES = ["img/8_coin/coin_1.png", "img/8_coin/coin_2.png"];
 
 
+  /**
+   * Creates a new coin with random position and starts animation.
+   */
   constructor() {
     super();
     this.loadImage(this.COIN_IMAGES[0]);
@@ -24,6 +31,9 @@ class Coin extends Movableobject {
   }
 
 
+  /**
+   * Starts the coin's spinning animation by toggling between two images.
+   */
   startCoinAnimation() {
     let toggle = false;
     setInterval(() => {

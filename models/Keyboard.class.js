@@ -1,3 +1,7 @@
+/**
+ * Represents the keyboard input state.
+ * Tracks which keys are currently pressed.
+ */
 class Keyboard {
   LEFT = false;
   RIGHT = false;
@@ -6,4 +10,3 @@ class Keyboard {
   SPACE = false;
   F = false;
 }
-

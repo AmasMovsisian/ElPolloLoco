@@ -5,6 +5,9 @@ let gameRunning = false;
 let canThrow = true;
 
 
+/**
+ * Checks device orientation and toggles display of rotation warning and canvas.
+ */
 function rotationCheckDisplay() {
     try {
         const warnBox = document.getElementById("rotationWarningBox");
@@ -19,6 +22,9 @@ function rotationCheckDisplay() {
 }
 
 
+/**
+ * Shows or hides mobile control buttons based on screen size and orientation.
+ */
 function toggleMobileButtons() {
     try {
         const mobileBtns = document.getElementById("mobileIconsContainer");
@@ -32,6 +38,9 @@ function toggleMobileButtons() {
 }
 
 
+/**
+ * Initializes the game world and canvas.
+ */
 function init() {
     canvas = document.getElementById("canvas");
     if (canvas) {
@@ -40,6 +49,9 @@ function init() {
 }
 
 
+/**
+ * Stops all active game processes, timeouts, and animations.
+ */
 function stopAllGameProcesses() {
     gameRunning = false;
     if (!world) return;
@@ -49,34 +61,53 @@ function stopAllGameProcesses() {
 }
 
 
+/**
+ * Clears timeout references from status bars.
+ */
 function clearStatusbarTimeouts() {
     if (world.statusBar?.deathTimeout) clearTimeout(world.statusBar.deathTimeout);
     if (world.endBossStatusbar?.deathTimeout) clearTimeout(world.endBossStatusbar.deathTimeout);
 }
 
 
+/**
+ * Calls stop methods on world and character if they exist.
+ */
 function callStopMethods() {
     world.stopGame?.();
     world.character?.stopAnimations?.();
 }
 
 
+/**
+ * Stops all enemy and boss animations.
+ */
 function stopAllAnimations() {
     stopEnemyAnimations();
     stopBossAnimations();
 }
 
 
+/**
+ * Stops animations for all enemies in the level.
+ */
 function stopEnemyAnimations() {
     world.level?.enemies?.forEach(enemy => enemy.stopAnimations?.());
 }
 
 
+/**
+ * Stops animations for all endboss instances in the level.
+ */
 function stopBossAnimations() {
     world.level?.endboss?.forEach(boss => boss.stopAnimations?.());
 }
 
 
+/**
+ * Retrieves key DOM elements for the game interface.
+ * @returns {Object} Collection of game UI elements.
+ */
 function getGameElements() {
     return {
         menu: document.getElementById('menu'),
@@ -88,6 +119,9 @@ function getGameElements() {
 }
 
 
+/**
+ * Starts the game, hides menus, and initializes game state.
+ */
 function startGame() {
     const el = getGameElements();
     stopAllGameProcesses();
@@ -104,6 +138,9 @@ function startGame() {
 }
 
 
+/**
+ * Returns to the main menu and resets game state.
+ */
 function home() {
     const el = getGameElements();
     stopAllGameProcesses();
@@ -118,6 +155,9 @@ function home() {
 }
 
 
+/**
+ * Ends the game successfully and shows the end screen.
+ */
 function endGame() {
   const el = getGameElements();
   stopAllGameProcesses();
@@ -133,6 +173,9 @@ function endGame() {
 }
 
 
+/**
+ * Handles game loss, plays sound, and shows the loss screen.
+ */
 function lostGame() {
     const el = getGameElements();
     stopAllGameProcesses();
@@ -174,17 +217,28 @@ window.addEventListener("load", function() {
 });
 
 
+/**
+ * Sets a key state in the keyboard object.
+ * @param {string} key - The key identifier.
+ * @param {boolean} value - The pressed state (true/false).
+ */
 const setKey = (key, value) => {
     if (typeof keyboard !== 'undefined' && keyboard) keyboard[key] = value;
 };
 
 
+/**
+ * Temporarily disables throwing, then re-enables after a delay.
+ */
 function allowThrowLater() {
     canThrow = false;
     setTimeout(() => canThrow = true, 2000);
 }
 
 
+/**
+ * Handles keyboard throwing action with cooldown.
+ */
 function handleThrowKey() {
     if (!canThrow) return;
     setKey('F', true);
@@ -192,6 +246,9 @@ function handleThrowKey() {
 }
 
 
+/**
+ * Handles touch throwing action with cooldown.
+ */
 function handleThrowTouch() {
     if (!canThrow) return;
     setKey('F', true);
@@ -199,6 +256,11 @@ function handleThrowTouch() {
 }
 
 
+/**
+ * Adds touch event listeners to a control element.
+ * @param {HTMLElement} element - The DOM element to attach listeners to.
+ * @param {string} key - The key identifier to set when touched.
+ */
 function addTouchControl(element, key) {
     if (!element) return;
     element.addEventListener('touchstart', (e) => {

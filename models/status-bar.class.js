@@ -1,3 +1,7 @@
+/**
+ * Represents the character's health status bar UI element.
+ * Displays remaining health and triggers death sequence when depleted.
+ */
 class StatusBar extends DrawableObject {
   IMAGES_HEALTH = [
     "img/7_statusbars/1_statusbar/2_statusbar_health/blue/0.png",
@@ -14,6 +18,9 @@ class StatusBar extends DrawableObject {
   deathTimeout = null;
 
 
+  /**
+   * Initializes the status bar with full health.
+   */
   constructor() {
     super();
     this.loadImages(this.IMAGES_HEALTH);
@@ -25,6 +32,9 @@ class StatusBar extends DrawableObject {
   }
 
 
+  /**
+   * Starts the death sequence when health reaches zero.
+   */
   startDeathSequence() {
     if (!gameRunning) return;
     this.deathSequenceStarted = true;
@@ -34,6 +44,10 @@ class StatusBar extends DrawableObject {
   }
 
 
+  /**
+   * Updates the status bar image based on current health percentage.
+   * @param {number} percent - Current health percentage (0-100).
+   */
   setPercent(percent) {
     this.percent = percent;
     let path = this.IMAGES_HEALTH[this.resolveImageIndex()];
@@ -44,6 +58,10 @@ class StatusBar extends DrawableObject {
   }
 
 
+  /**
+   * Determines which status bar image to display based on health percentage.
+   * @returns {number} Index of the appropriate image in IMAGES_HEALTH.
+   */
   resolveImageIndex() {
     if (this.percent == 100) {
       return 5;
@@ -61,14 +79,9 @@ class StatusBar extends DrawableObject {
   }
 
 
-  startDeathSequence() {
-    this.deathSequenceStarted = true;
-    setTimeout(() => {
-      this.gameLostCharacter();
-    }, 1500);
-  }
-
-
+  /**
+   * Triggers the game lost sequence after a short delay.
+   */
   gameLostCharacter() {
     lostGame();
     AudioHub.playOne(AudioHub.characterLost);

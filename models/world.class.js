@@ -1,3 +1,6 @@
+/**
+ * Main game world class that manages all game objects, collisions, and rendering.
+ */
 class World {
   character = new Character();
   smallChickens = new SmallChicken();
@@ -20,6 +23,11 @@ class World {
   isGameRunning = true;
 
 
+  /**
+   * Initializes the game world with canvas and keyboard input.
+   * @param {HTMLCanvasElement} canvas - The game canvas element.
+   * @param {Keyboard} keyboard - The keyboard input handler.
+   */
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
@@ -30,6 +38,9 @@ class World {
   }
 
 
+  /**
+   * Starts the main game loop for drawing and updating.
+   */
   startGameLoop() {
     this.isGameRunning = true;
     this.draw();
@@ -37,6 +48,9 @@ class World {
   }
 
 
+  /**
+   * Stops all game processes, intervals, and clears the canvas.
+   */
   stopGame() {
     this.isGameRunning = false;
     this.gameIntervals.forEach(clearInterval);
@@ -53,6 +67,9 @@ class World {
   }
 
 
+  /**
+   * Checks collisions between character and enemies.
+   */
   checkCollisions() {
     if (!this.isGameRunning) return;
     this.level.enemies.forEach((enemy) => {
@@ -64,6 +81,9 @@ class World {
     });
   }
 
+  /**
+   * Reduces character energy and updates status bar when hit.
+   */
   characterLosesEnergy() {
     AudioHub.playOne(AudioHub.characterHurt);
     this.character.hit();
@@ -71,6 +91,9 @@ class World {
   }
 
 
+  /**
+   * Handles coin collection collisions.
+   */
   checkCoinsCollisions() {
     if (!this.isGameRunning) return;
     for (let i = this.level.coins.length - 1; i >= 0; i--) {
@@ -84,6 +107,9 @@ class World {
   }
 
 
+  /**
+   * Handles bottle collection collisions.
+   */
   checkBottlesCollisions() {
     if (!this.isGameRunning) return;
     for (let i = this.level.bottles.length - 1; i >= 0; i--) {
@@ -98,6 +124,9 @@ class World {
   }
 
 
+  /**
+   * Checks collisions from the top (jumping on enemies).
+   */
 checkCollisionsTop() {
   if (!this.isGameRunning) return;
   const hitEnemies = this.level.enemies.filter(e => 
@@ -108,6 +137,10 @@ checkCollisionsTop() {
 }
 
 
+  /**
+   * Processes enemy hit from above.
+   * @param {Chicken|SmallChicken} enemy - The enemy that was hit.
+   */
 hitEnemy(enemy) {
   enemy.isHitFromTop = true;
   enemy.enemyWasHit();
@@ -116,6 +149,10 @@ hitEnemy(enemy) {
 }
 
 
+  /**
+   * Removes enemies from the level after they are hit.
+   * @param {Array} enemies - Array of enemies to remove.
+   */
 removeEnemies(enemies) {
   if (this.isGameRunning) {
     this.level.enemies = this.level.enemies.filter(e => !enemies.includes(e));
@@ -123,6 +160,9 @@ removeEnemies(enemies) {
 }
 
 
+  /**
+   * Checks collisions between thrown bottles and enemies.
+   */
 checkBottleEnemyCollisions() {
   if (!this.isGameRunning) return;
   this.processCollisions();
@@ -130,6 +170,9 @@ checkBottleEnemyCollisions() {
 }
 
 
+  /**
+   * Processes bottle-enemy collision detection.
+   */
 processCollisions() {
   this.throwableObjects.forEach(bottle => {
     this.level.enemies.forEach(enemy => {
@@ -139,6 +182,11 @@ processCollisions() {
 }
 
 
+  /**
+   * Handles collision between bottle and enemy.
+   * @param {ThrowableObject} bottle - The thrown bottle.
+   * @param {Chicken|SmallChicken} enemy - The enemy hit by the bottle.
+   */
 handleCollision(bottle, enemy) {
   AudioHub.playOne(AudioHub.bottleHit);
   enemy.splash?.() || (enemy.isDead = enemy.toRemove = true);
@@ -147,16 +195,26 @@ handleCollision(bottle, enemy) {
 }
 
 
+  /**
+   * Removes a single enemy from the level.
+   * @param {Chicken|SmallChicken} enemy - The enemy to remove.
+   */
 removeEnemy(enemy) {
   if (this.isGameRunning) this.level.enemies = this.level.enemies.filter(e => e !== enemy);
 }
 
 
+  /**
+   * Cleans up throwable objects marked for removal.
+   */
 cleanupObjects() {
   this.throwableObjects = this.throwableObjects.filter(b => !b.toRemove);
 }
 
 
+  /**
+   * Checks collisions between thrown bottles and the end boss.
+   */
  checkBottleEndbossCollision() {
   if (!this.isGameRunning) return;
   this.throwableObjects.forEach(bottle => {
@@ -168,6 +226,11 @@ cleanupObjects() {
 }
 
 
+  /**
+   * Handles collision between bottle and end boss.
+   * @param {ThrowableObject} bottle - The thrown bottle.
+   * @param {Endboss} bigenemy - The end boss hit by the bottle.
+   */
  hitEndboss(bottle, bigenemy) {
   AudioHub.playOne(AudioHub.bottleHit);
   AudioHub.playOne(AudioHub.endBossHurt);
@@ -177,6 +240,9 @@ cleanupObjects() {
 }
 
 
+  /**
+   * Main game update loop that runs at regular intervals.
+   */
   run() {
     const intervalId = setInterval(() => {
       if (!this.isGameRunning) {
@@ -195,12 +261,18 @@ cleanupObjects() {
   }
 
 
+  /**
+   * Increments the bottle counter when a bottle is picked up.
+   */
   pickUpBottle() {
     if (!this.isGameRunning) return;
     this.bottlesToThrow++;
   }
 
 
+  /**
+   * Checks if player can throw a bottle and creates throwable object.
+   */
   checkThrowObjects() {
     if (!this.isGameRunning) return;
     if (this.keyboard.F && !this.lastFPressed && this.bottlesToThrow > 0) {
@@ -214,11 +286,17 @@ cleanupObjects() {
   }
 
 
+  /**
+   * Sets the world reference for the character.
+   */
   setWorld() {
     this.character.world = this;
   }
 
 
+  /**
+   * Main drawing function that renders the entire game world.
+   */
   draw() {
     if (!this.isGameRunning) return;
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -235,6 +313,9 @@ cleanupObjects() {
   }
 
 
+  /**
+   * Draws background elements: background objects, clouds, and throwable objects.
+   */
   drawGameBg() {
     this.addObjectsToMap(this.level.backgroundObjects);
     this.addObjectsToMap(this.level.clouds);
@@ -242,6 +323,9 @@ cleanupObjects() {
   }
 
 
+  /**
+   * Draws interactive game objects: character, coins, bottles, enemies, and end boss.
+   */
   drawGameObjects() {
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.coins);
@@ -251,12 +335,18 @@ cleanupObjects() {
   }
 
 
+  /**
+   * Manages camera translation for screen scrolling.
+   */
   drawCameras() {
    this.ctx.translate(this.camera_x, 0);
    this.ctx.translate(-this.camera_x, 0);
   }
 
 
+  /**
+   * Draws all status bars (health, coins, bottles, end boss health).
+   */
   drawStatusBars() {
     this.addToMap(this.statusBar);
     this.addToMap(this.coinStatusBar);
@@ -265,6 +355,9 @@ cleanupObjects() {
   }
 
 
+  /**
+   * Shows the end boss status bar when character gets close enough.
+   */
   showEndBossStatusBar() {
     if (this.endBossStatusbarShown === undefined) this.endBossStatusbarShown = false;
     if (!this.endBossStatusbarShown && this.endboss.x - this.character.x <= 450) this.endBossStatusbarShown = true;
@@ -272,6 +365,10 @@ cleanupObjects() {
   }
 
 
+  /**
+   * Adds multiple objects to the map by calling addToMap for each.
+   * @param {Array} objects - Array of drawable objects to add.
+   */
   addObjectsToMap(objects) {
     objects.forEach((o) => {
       this.addToMap(o);
@@ -279,6 +376,10 @@ cleanupObjects() {
   }
 
 
+  /**
+   * Adds a single object to the map, handling direction flipping if needed.
+   * @param {DrawableObject} mo - The movable object to draw.
+   */
   addToMap(mo) {
     if (mo.otherDirection) {
       this.flipImage(mo);
@@ -291,6 +392,10 @@ cleanupObjects() {
   }
 
 
+  /**
+   * Flips an image horizontally for left-facing sprites.
+   * @param {DrawableObject} mo - The object to flip.
+   */
   flipImage(mo) {
     this.ctx.save();
     this.ctx.translate(mo.width, 0);
@@ -299,6 +404,10 @@ cleanupObjects() {
   }
 
 
+  /**
+   * Restores an image to its original orientation after flipping.
+   * @param {DrawableObject} mo - The object to restore.
+   */
   flipImageBack(mo) {
     mo.x = mo.x * -1;
     this.ctx.restore();

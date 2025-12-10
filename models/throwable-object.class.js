@@ -1,3 +1,7 @@
+/**
+ * Represents a throwable bottle object that can be used as a weapon.
+ * Features rotation animation and gravity-based projectile motion.
+ */
 class ThrowableObject extends Movableobject {
   offset = {
     top: 10,
@@ -15,6 +19,11 @@ class ThrowableObject extends Movableobject {
   ];
 
 
+  /**
+   * Creates a new throwable bottle at the specified position.
+   * @param {number} x - Horizontal starting position.
+   * @param {number} y - Vertical starting position.
+   */
   constructor(x, y) {
     super().loadImage("img/6_salsa_bottle/salsa_bottle.png");
     this.loadImages(this.BOTTLE_ROTATION);
@@ -27,6 +36,9 @@ class ThrowableObject extends Movableobject {
   }
 
 
+  /**
+   * Initiates the throwing motion with sound, gravity, and rotation animation.
+   */
   throw() {
     AudioHub.playOne(AudioHub.bottleThrow);
     this.speedY = 30;
@@ -39,6 +51,9 @@ class ThrowableObject extends Movableobject {
   }
 
 
+  /**
+   * Plays the bottle rotation animation.
+   */
   animate() {
     this.playAnimation(this.BOTTLE_ROTATION);
   }

@@ -1,3 +1,7 @@
+/**
+ * Represents a small chicken enemy in the game.
+ * Can be killed by jumping on it or by throwing bottles.
+ */
 class SmallChicken extends Movableobject {
   height = 50;
   width = 50;
@@ -35,6 +39,9 @@ class SmallChicken extends Movableobject {
   ];
 
 
+  /**
+   * Creates a new small chicken with random position and speed.
+   */
   constructor() {
     super();
     this.loadImage(this.IMAGES_WALKING_SMALL_CHICKEN[0]);
@@ -45,6 +52,9 @@ class SmallChicken extends Movableobject {
   }
 
 
+  /**
+   * Starts animation and movement intervals for the small chicken.
+   */
   animate() {
     setInterval(() => {
       if (!this.isDead) this.moveLeft();
@@ -60,6 +70,9 @@ class SmallChicken extends Movableobject {
   }
 
 
+  /**
+   * Plays bottle splash animation and marks chicken for removal.
+   */
   splash() {
     this.isDead = true;
     this.isHitFromBottle = true;

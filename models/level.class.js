@@ -1,3 +1,6 @@
+/**
+ * Represents a game level containing all game objects and their positions.
+ */
 class Level {
   enemies;
   endboss;
@@ -9,6 +12,15 @@ class Level {
   end_of_X;
 
   
+  /**
+   * Creates a new level with the specified game objects.
+   * @param {Array} enemies - Array of enemy objects.
+   * @param {Array} endboss - Array of endboss objects.
+   * @param {Array} clouds - Array of cloud objects.
+   * @param {Array} coins - Array of coin objects.
+   * @param {Array} bottles - Array of bottle objects.
+   * @param {Array} backgroundObjects - Array of background objects.
+   */
   constructor(enemies, endboss, clouds, coins, bottles, backgroundObjects) {
     this.enemies = enemies;
     this.endboss = endboss;
@@ -20,6 +32,9 @@ class Level {
   }
 
   
+  /**
+   * Updates the level end position based on the endboss's X coordinate.
+   */
   endboss_X() {
     for (let i = 0; i < this.endboss.length; i++) {
       setInterval(() => {

@@ -1,3 +1,7 @@
+/**
+ * Represents a normal chicken enemy in the game.
+ * Can be killed by jumping on top or by throwing bottles.
+ */
 class Chicken extends Movableobject {
   height = 72;
   width = 72;
@@ -33,6 +37,9 @@ class Chicken extends Movableobject {
   ];
 
 
+  /**
+   * Creates a new chicken with random position and speed.
+   */
   constructor() {
     super().loadImage("img/3_enemies_chicken/chicken_normal/1_walk/1_w.png");
     this.x = 850 + Math.random() * 9000;
@@ -42,6 +49,9 @@ class Chicken extends Movableobject {
     this.moveLeft();
   }
 
+  /**
+   * Starts animation and movement intervals for the chicken.
+   */
   animate() {
     setInterval(() => {
       if (!this.isDead) this.moveLeft();
@@ -57,6 +67,9 @@ class Chicken extends Movableobject {
   }
 
 
+  /**
+   * Plays bottle splash animation and marks chicken for removal.
+   */
   splash() {
     this.isDead = true;
     this.isHitFromBottle = true;

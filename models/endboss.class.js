@@ -1,3 +1,7 @@
+/**
+ * Represents the final boss enemy with multiple states and complex behavior.
+ * Manages walking, attacking, hurting, and death animations with sound control.
+ */
 class Endboss extends Movableobject {
   height = 400;
   width = 250;
@@ -54,6 +58,9 @@ class Endboss extends Movableobject {
     "img/4_enemie_boss_chicken/5_dead/G26.png",
   ];
 
+  /**
+   * Initializes the end boss with starting position, health, and animations.
+   */
   constructor() {
     super().loadImage("img/4_enemie_boss_chicken/2_alert/G5.png");
     this.x = 10000;
@@ -70,6 +77,9 @@ class Endboss extends Movableobject {
   }
 
 
+  /**
+   * Preloads all animation image sets for the end boss.
+   */
   loadAllAnimations() {
     this.loadImages(this.IMAGE_ALERT_END_BOSS);
     this.loadImages(this.IMAGE_WALKING_END_BOSS);
@@ -79,6 +89,10 @@ class Endboss extends Movableobject {
   }
 
 
+  /**
+   * Plays or stops boss sounds based on current state.
+   * @param {string|null} state - The sound state to play ('walking', 'attack', or null).
+   */
   playBossSound(state) {
     if (this.currentSound === state) return;
     if (this.currentSound === "walking") AudioHub.stop(AudioHub.endBossWalking);
@@ -89,6 +103,9 @@ class Endboss extends Movableobject {
   }
 
 
+  /**
+   * Stops all currently playing boss sounds.
+   */
   stopAllBossSounds() {
     AudioHub.stop(AudioHub.endBossWalking);
     AudioHub.stop(AudioHub.endBossAttack);
@@ -96,12 +113,18 @@ class Endboss extends Movableobject {
   }
 
 
+  /**
+   * Starts the animation and movement intervals for the end boss.
+   */
   animate() {
     this.animationInterval = setInterval(() => this.updateAnimation(), 100);
     this.movementInterval = setInterval(() => this.updateMovement(), 1000 / 24);
   }
 
 
+  /**
+   * Updates the boss animation based on current state and energy.
+   */
   updateAnimation() {
     if (this.isDead) return this.handleDeathAnimation();
     if (this.isHurt) return this.handleHurtAnimation();
@@ -109,6 +132,9 @@ class Endboss extends Movableobject {
   }
 
 
+  /**
+   * Handles the death animation sequence and triggers win state.
+   */
   handleDeathAnimation() {
   this.playAnimation(this.IMAGE_DEAD_END_BOSS);
   this.stopCharacter(); 
@@ -123,6 +149,9 @@ class Endboss extends Movableobject {
 }
 
 
+  /**
+   * Stops character movement and input when boss is defeated.
+   */
 stopCharacter() {
   if (world && world.character) {
     world.character.speed = 0;
@@ -134,12 +163,18 @@ stopCharacter() {
 }
 
 
+  /**
+   * Handles hurt animation when boss takes damage.
+   */
   handleHurtAnimation() {
     this.playAnimation(this.IMAGE_HURT_END_BOSS);
     setTimeout(() => (this.isHurt = false), 500);
   }
 
 
+  /**
+   * Selects animation based on boss energy level and state.
+   */
   handleEnergyBasedAnimation() {
     if (this.isKillingActive || this.energy <= 60) {
       this.playAnimation(this.IMAGE_ATTACK_END_BOSS);
@@ -154,6 +189,9 @@ stopCharacter() {
   }
 
 
+  /**
+   * Updates boss movement based on distance to character and energy.
+   */
   updateMovement() {
     if (this.isDead) return;
     let before = this.x;
@@ -171,6 +209,9 @@ stopCharacter() {
   }
 
 
+  /**
+   * Activates killing mode when character is close.
+   */
   startKillingMode() {
     this.isKillingActive = true;
     this.playBossSound("attack");
@@ -178,11 +219,18 @@ stopCharacter() {
   }
 
 
+  /**
+   * Deactivates killing mode.
+   */
   stopKillingMode() {
     this.isKillingActive = false;
   }
 
 
+  /**
+   * Applies damage to the boss and updates state.
+   * @param {number} damage - Amount of damage to inflict (default: 2).
+   */
   hit(damage = 2) {
     if (this.isDead) return;
     this.energy -= damage;
@@ -194,6 +242,9 @@ stopCharacter() {
   }
 
 
+  /**
+   * Stops all boss animations and sounds.
+   */
   stopAnimations() {
     clearInterval(this.animationInterval);
     clearInterval(this.movementInterval);

@@ -1,3 +1,7 @@
+/**
+ * Represents the main player character.
+ * Handles movement, animations, sounds, and interaction with the game world.
+ */
 class Character extends Movableobject {
   width = 150;
   height = 300;
@@ -79,6 +83,9 @@ class Character extends Movableobject {
     "img/2_character_pepe/4_hurt/H-43.png",
   ];
 
+  /**
+   * Initializes the character with default image and animation setup.
+   */
   constructor() {
     super().loadImage("img/2_character_pepe/2_walk/W-21.png");
     this.loadImages(this.IMAGES_WALKING);
@@ -91,12 +98,18 @@ class Character extends Movableobject {
     this.applyGravity();
   }
 
+  /**
+   * Starts character animation loops and idle checking.
+   */
   animate() {
     this.checkIdleTime();
     this.setupMovementInterval();
     this.setupAnimationInterval();
   }
 
+  /**
+   * Sets up the interval for handling movement and camera updates.
+   */
   setupMovementInterval() {
     setInterval(() => {
       this.handleMovement();
@@ -104,6 +117,9 @@ class Character extends Movableobject {
     }, 1000 / 120);
   }
 
+  /**
+   * Processes keyboard input for walking, jumping, and related sounds.
+   */
   handleMovement() {
     const walkingNow = this.handleWalking();
     this.handleWalkingSound(walkingNow);
@@ -113,6 +129,10 @@ class Character extends Movableobject {
     }
   }
 
+  /**
+   * Handles left/right movement based on keyboard input.
+   * @returns {boolean} True if character is currently walking.
+   */
   handleWalking() {
     if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
       this.moveRight();
@@ -126,6 +146,10 @@ class Character extends Movableobject {
     return false;
   }
 
+  /**
+   * Manages walking sound playback based on movement state.
+   * @param {boolean} walkingNow - Whether the character is currently walking.
+   */
   handleWalkingSound(walkingNow) {
     if (walkingNow && !this.isWalkingSoundPlaying) {
       this.isWalkingSoundPlaying = true;
@@ -136,6 +160,9 @@ class Character extends Movableobject {
     }
   }
 
+  /**
+   * Sets up the interval for character animation updates.
+   */
   setupAnimationInterval() {
     setInterval(() => {
       if (this.isDead()) return this.handleDeadState();
@@ -146,24 +173,36 @@ class Character extends Movableobject {
     }, 2000 / 24);
   }
 
+  /**
+   * Handles animation and sounds for the dead state.
+   */
   handleDeadState() {
     this.playOnceAnimation(this.IMAGE_DEAD);
     AudioHub.stop(AudioHub.characterSnoring);
     this.isSnoring = false;
   }
 
+  /**
+   * Handles animation and sounds for the hurt state.
+   */
   handleHurtState() {
     AudioHub.stop(AudioHub.characterSnoring);
     this.isSnoring = false;
     this.playAnimation(this.IMAGE_HURT);
   }
 
+  /**
+   * Handles animation and sounds for the jump state.
+   */
   handleJumpState() {
     AudioHub.stop(AudioHub.characterSnoring);
     this.isSnoring = false;
     this.playAnimation(this.IMAGE_JUMP);
   }
 
+  /**
+   * Handles animation and sounds for the long idle state.
+   */
   handleLongIdleState() {
     if (!this.isSnoring) {
       AudioHub.playLoop(AudioHub.characterSnoring);
@@ -172,6 +211,9 @@ class Character extends Movableobject {
     this.playAnimation(this.IMAGES_IDLE_LONG);
   }
 
+  /**
+   * Handles animation and sounds for normal movement/idle states.
+   */
   handleNormalState() {
     AudioHub.stop(AudioHub.characterSnoring);
     this.isSnoring = false;
@@ -182,12 +224,14 @@ class Character extends Movableobject {
     }
   }
 
+  /**
+   * Continuously checks idle time to trigger long idle animations.
+   */
   checkIdleTime() {
     this.idleCheckInterval = setInterval(() => {
       if (this.world && this.world.isGameOver) {
         this.isLongIdle = false;
-        return;
-      }
+        return;  }
       const noInput = !this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.SPACE && !this.world.keyboard.UP;
       if (noInput && !this.isLongIdle) {
         const idleDuration = Date.now() - this.lastMovementTime;
@@ -199,6 +243,9 @@ class Character extends Movableobject {
     }, 30);
   }
 
+  /**
+   * Stops all character animations and sounds.
+   */
   stopAnimations() {
     if (this.idleCheckInterval) {
       clearInterval(this.idleCheckInterval);

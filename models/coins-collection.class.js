@@ -3,7 +3,6 @@ class Coin extends Movableobject {
   width = 120;
   y = 100;
   x = 100;
-
   offset = {
     top: 50,
     bottom: 50,
@@ -11,7 +10,9 @@ class Coin extends Movableobject {
     right: 50,
   };
 
+
   COIN_IMAGES = ["img/8_coin/coin_1.png", "img/8_coin/coin_2.png"];
+
 
   constructor() {
     super();
@@ -21,6 +22,7 @@ class Coin extends Movableobject {
     this.y = 100 + Math.random() * 60;
     this.startCoinAnimation();
   }
+
 
   startCoinAnimation() {
     let toggle = false;

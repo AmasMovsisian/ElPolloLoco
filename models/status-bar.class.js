@@ -8,9 +8,11 @@ class StatusBar extends DrawableObject {
     "img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png",
   ];
 
+
   percent = 100;
   deathSequenceStarted = false;
   deathTimeout = null;
+
 
   constructor() {
     super();
@@ -22,27 +24,25 @@ class StatusBar extends DrawableObject {
     this.setPercent(100);
   }
 
+
   startDeathSequence() {
     if (!gameRunning) return;
-
     this.deathSequenceStarted = true;
-
     this.deathTimeout = setTimeout(() => {
-      if (gameRunning) {
-        this.gameLostCharacter();
-      }
+      if (gameRunning)this.gameLostCharacter();
     }, 1500);
   }
+
 
   setPercent(percent) {
     this.percent = percent;
     let path = this.IMAGES_HEALTH[this.resolveImageIndex()];
     this.img = this.imageCahche[path];
-
     if (this.percent === 0 && !this.deathSequenceStarted) {
       this.startDeathSequence();
     }
   }
+
 
   resolveImageIndex() {
     if (this.percent == 100) {
@@ -60,6 +60,7 @@ class StatusBar extends DrawableObject {
     }
   }
 
+
   startDeathSequence() {
     this.deathSequenceStarted = true;
     setTimeout(() => {
@@ -67,7 +68,11 @@ class StatusBar extends DrawableObject {
     }, 1500);
   }
 
+
   gameLostCharacter() {
     lostGame();
+    AudioHub.playOne(AudioHub.characterLost);
   }
+
+
 }

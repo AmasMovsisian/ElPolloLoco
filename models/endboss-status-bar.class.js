@@ -8,9 +8,11 @@ class EndbossStatusBar extends DrawableObject {
     "img/7_statusbars/2_statusbar_endboss/blue/blue100.png",
   ];
 
+
   energy = 100;
   deathSequenceStarted = false;
   deathTimeout = null;
+
 
   constructor() {
     super();
@@ -23,10 +25,10 @@ class EndbossStatusBar extends DrawableObject {
     this.setPercent(100);
   }
 
+
   startDeathSequence() {
     if (!gameRunning) return;
     this.deathSequenceStarted = true;
-
     this.deathTimeout = setTimeout(() => {
       if (gameRunning) {
         this.GameWon();
@@ -34,15 +36,16 @@ class EndbossStatusBar extends DrawableObject {
     }, 1500);
   }
 
+
   setPercent(energy) {
     this.energy = energy;
     let path = this.IMAGES_ENDBOSS_HEALTH[this.resolveImageIndex()];
     this.img = this.imageCahche[path];
-
     if (this.energy === 0 && !this.deathSequenceStarted) {
       this.startDeathSequence();
     }
   }
+
 
   resolveImageIndex() {
     if (this.energy == 100) {
@@ -60,12 +63,14 @@ class EndbossStatusBar extends DrawableObject {
     }
   }
 
+
   startDeathSequence() {
     this.deathSequenceStarted = true;
     setTimeout(() => {
       this.GameWon();
     }, 1500);
   }
+
 
   GameWon() {
     if (this.energy == 0) {

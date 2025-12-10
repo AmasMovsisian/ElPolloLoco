@@ -19,6 +19,7 @@ class World {
   gameIntervals = [];
   isGameRunning = true;
 
+  
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
@@ -27,6 +28,7 @@ class World {
     this.startGameLoop();
     this.bottlesThrown = [];
   }
+
 
   startGameLoop() {
     this.isGameRunning = true;
@@ -114,54 +116,58 @@ class World {
   }
 
 
-  checkBottleEnemyCollisions() {
-    if (!this.isGameRunning) return;
-    for (let i = this.throwableObjects.length - 1; i >= 0; i--) {
-      const bottle = this.throwableObjects[i];
-      for (let j = this.level.enemies.length - 1; j >= 0; j--) {
-        const enemy = this.level.enemies[j];
-        if (bottle.isColliding(enemy)) {
-          if (typeof enemy.splash === "function") {
-            AudioHub.playOne(AudioHub.bottleHit);
-            enemy.splash();
-          } else {
-            enemy.isDead = true;
-            enemy.toRemove = true;
-          }
-          bottle.toRemove = true;
-          setTimeout(() => {
-            if (this.isGameRunning) {
-              this.level.enemies = this.level.enemies.filter(
-                (e) => e !== enemy
-              );
-            }
-          }, 400);
-          break;
-        }
-      }
-    }
-    this.throwableObjects = this.throwableObjects.filter((b) => !b.toRemove);
-  }
+checkBottleEnemyCollisions() {
+  if (!this.isGameRunning) return;
+  this.processCollisions();
+  this.cleanupObjects();
+}
 
 
-  checkBottleEndbossCollision() {
-    if (!this.isGameRunning) return;
-    for (let i = this.throwableObjects.length - 1; i >= 0; i--) {
-      const bottle = this.throwableObjects[i];
-      for (let j = this.level.endboss.length - 1; j >= 0; j--) {
-        const bigenemy = this.level.endboss[j];
-        if (bottle.isColliding(bigenemy)) {
-          AudioHub.playOne(AudioHub.bottleHit);
-          AudioHub.playOne(AudioHub.endBossHurt);
-          bigenemy.hit(10);
-          this.endBossStatusbar.setPercent(bigenemy.energy);
-          bottle.toRemove = true;
-          break;
-        }
-      }
-    }
-    this.throwableObjects = this.throwableObjects.filter((b) => !b.toRemove);
-  }
+processCollisions() {
+  this.throwableObjects.forEach(bottle => {
+    this.level.enemies.forEach(enemy => {
+      if (bottle.isColliding(enemy)) this.handleCollision(bottle, enemy);
+    });
+  });
+}
+
+
+handleCollision(bottle, enemy) {
+  AudioHub.playOne(AudioHub.bottleHit);
+  enemy.splash?.() || (enemy.isDead = enemy.toRemove = true);
+  bottle.toRemove = true;
+  setTimeout(() => this.removeEnemy(enemy), 400);
+}
+
+
+removeEnemy(enemy) {
+  if (this.isGameRunning) this.level.enemies = this.level.enemies.filter(e => e !== enemy);
+}
+
+
+cleanupObjects() {
+  this.throwableObjects = this.throwableObjects.filter(b => !b.toRemove);
+}
+
+
+ checkBottleEndbossCollision() {
+  if (!this.isGameRunning) return;
+  this.throwableObjects.forEach(bottle => {
+    this.level.endboss.forEach(bigenemy => {
+      if (bottle.isColliding(bigenemy)) this.hitEndboss(bottle, bigenemy);
+    });
+  });
+  this.throwableObjects = this.throwableObjects.filter(b => !b.toRemove);
+}
+
+
+ hitEndboss(bottle, bigenemy) {
+  AudioHub.playOne(AudioHub.bottleHit);
+  AudioHub.playOne(AudioHub.endBossHurt);
+  bigenemy.hit(10);
+  this.endBossStatusbar.setPercent(bigenemy.energy);
+  bottle.toRemove = true;
+}
 
 
   run() {

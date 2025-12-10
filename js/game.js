@@ -2,16 +2,15 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let gameRunning = false;
+let canThrow = true;
+
 
 function rotationCheckDisplay() {
     try {
         const warnBox = document.getElementById("rotationWarningBox");
         const canvasBox = document.getElementById("canvas");
-        
         if (!warnBox || !canvasBox) return;
-        
         const isMobilePortrait = window.innerWidth < 740 && window.innerHeight > window.innerWidth;
-        
         warnBox.style.display = isMobilePortrait ? "flex" : "none";
         canvasBox.style.display = gameRunning && !isMobilePortrait ? "block" : "none";
     } catch (error) {
@@ -19,19 +18,19 @@ function rotationCheckDisplay() {
     }
 }
 
+
 function toggleMobileButtons() {
     try {
         const mobileBtns = document.getElementById("mobileIconsContainer");
         if (!mobileBtns) return;
-        
         const isMobile = window.innerWidth < 900;
         const isLandscape = window.innerWidth > window.innerHeight;
-        
         mobileBtns.style.display = gameRunning && isMobile && isLandscape ? "block" : "none";
     } catch (error) {
         console.warn("Toggle mobile buttons failed:", error);
     }
 }
+
 
 function init() {
     canvas = document.getElementById("canvas");
@@ -40,116 +39,121 @@ function init() {
     }
 }
 
+
 function stopAllGameProcesses() {
     gameRunning = false;
-    
-    if (world) {
-        if (world.statusBar && world.statusBar.deathTimeout) {
-            clearTimeout(world.statusBar.deathTimeout);
-        }
-        if (world.endBossStatusbar && world.endBossStatusbar.deathTimeout) {
-            clearTimeout(world.endBossStatusbar.deathTimeout);
-        }
-        if (world.stopGame) {
-            world.stopGame();
-        }
-        if (world.character && world.character.stopAnimations) {
-            world.character.stopAnimations();
-        }
-        if (world.level && world.level.enemies) {
-            world.level.enemies.forEach(enemy => {
-                if (enemy.stopAnimations) enemy.stopAnimations();
-            });
-        }
-        if (world.level && world.level.endboss) {
-            world.level.endboss.forEach(boss => {
-                if (boss.stopAnimations) boss.stopAnimations();
-            });
-        }
-    }
+    if (!world) return;
+    clearStatusbarTimeouts();
+    callStopMethods();
+    stopAllAnimations();
 }
 
+
+function clearStatusbarTimeouts() {
+    if (world.statusBar?.deathTimeout) clearTimeout(world.statusBar.deathTimeout);
+    if (world.endBossStatusbar?.deathTimeout) clearTimeout(world.endBossStatusbar.deathTimeout);
+}
+
+
+function callStopMethods() {
+    world.stopGame?.();
+    world.character?.stopAnimations?.();
+}
+
+
+function stopAllAnimations() {
+    stopEnemyAnimations();
+    stopBossAnimations();
+}
+
+
+function stopEnemyAnimations() {
+    world.level?.enemies?.forEach(enemy => enemy.stopAnimations?.());
+}
+
+
+function stopBossAnimations() {
+    world.level?.endboss?.forEach(boss => boss.stopAnimations?.());
+}
+
+
+function getGameElements() {
+    return {
+        menu: document.getElementById('menu'),
+        canvas: document.getElementById('canvas'),
+        endMenu: document.getElementById('endMenu'),
+        lostMenu: document.getElementById('lostMenu'),
+        audioToggle: document.getElementById('audioToggleBTN')
+    };
+}
+
+
 function startGame() {
-    const menu = document.getElementById('menu');
-    const canvas = document.getElementById('canvas');
-    const endMenu = document.getElementById('endMenu');
-    const lostMenu = document.getElementById('lostMenu');
-    const audioToggle = document.getElementById('audioToggleBTN');
-    
+    const el = getGameElements();
     stopAllGameProcesses();
-    
-    menu.style.display = 'none';
-    endMenu.style.display = 'none';
-    lostMenu.style.display = 'none';
-    canvas.style.display = 'block';
-    if (audioToggle) audioToggle.style.display = 'block';
-    
+    el.menu.style.display = 'none';
+    el.endMenu.style.display = 'none';
+    el.lostMenu.style.display = 'none';
+    el.canvas.style.display = 'block';
+    if (el.audioToggle) el.audioToggle.style.display = 'block';
     gameRunning = true;
-    
-    if (typeof initLevel1 === 'function') {
-        initLevel1();
-    }
+    if (typeof initLevel1 === 'function') initLevel1();
     init();
     rotationCheckDisplay();
     toggleMobileButtons();
 }
 
+
 function home() {
-    const menu = document.getElementById('menu');
-    const canvas = document.getElementById('canvas');
-    const endMenu = document.getElementById('endMenu');
-    const lostMenu = document.getElementById('lostMenu');
-    const audioToggle = document.getElementById('audioToggleBTN');
-    
+    const el = getGameElements();
     stopAllGameProcesses();
-    
-    menu.style.display = 'block';
-    endMenu.style.display = 'none';
-    lostMenu.style.display = 'none';
-    canvas.style.display = 'none';
-    if (audioToggle) audioToggle.style.display = 'none';
-    
+    el.menu.style.display = 'block';
+    el.endMenu.style.display = 'none';
+    el.lostMenu.style.display = 'none';
+    el.canvas.style.display = 'none';
+    if (el.audioToggle) el.audioToggle.style.display = 'none';
     gameRunning = false;
     rotationCheckDisplay();
     toggleMobileButtons();
 }
+
 
 function endGame() {
-    stopAllGameProcesses();
-    AudioHub.stopAllCharacterSounds();
-    gameRunning = false;
-    document.getElementById('endMenu').style.display = 'block';
-    document.getElementById('menu').style.display = 'none';
-    document.getElementById('lostMenu').style.display = 'none';
-    document.getElementById('canvas').style.display = 'none';
-    const audioToggle = document.getElementById('audioToggleBTN');
-    if (audioToggle) audioToggle.style.display = 'none';
-    rotationCheckDisplay();
-    toggleMobileButtons();
-    AudioHub.stopAllCharacterSounds();
+  const el = getGameElements();
+  stopAllGameProcesses();
+  AudioHub.stopAllCharacterSounds();
+  gameRunning = false;
+  el.endMenu.style.display = 'block';
+  el.menu.style.display = 'none';
+  el.lostMenu.style.display = 'none';
+  el.canvas.style.display = 'none';
+  if (el.audioToggle) el.audioToggle.style.display = 'none';
+  rotationCheckDisplay();
+  toggleMobileButtons();
 }
 
+
 function lostGame() {
+    const el = getGameElements();
     stopAllGameProcesses();
-    AudioHub.playOne(AudioHub.characterLost);
-    AudioHub.stop(AudioHub.endBossAttack);
-    AudioHub.stop(AudioHub.endBossWalking);
     AudioHub.stopAllCharacterSounds();
     gameRunning = false;
-    document.getElementById('lostMenu').style.display = 'block';
-    document.getElementById('menu').style.display = 'none';
-    document.getElementById('endMenu').style.display = 'none';
-    document.getElementById('canvas').style.display = 'none';
-    const audioToggle = document.getElementById('audioToggleBTN');
-    if (audioToggle) audioToggle.style.display = 'none';
+    AudioHub.playOne(AudioHub.characterLost);
+    el.lostMenu.style.display = 'block';
+    el.menu.style.display = 'none';
+    el.endMenu.style.display = 'none';
+    el.canvas.style.display = 'none';
+    if (el.audioToggle) el.audioToggle.style.display = 'none';
     rotationCheckDisplay();
     toggleMobileButtons();
 }
+
 
 window.addEventListener("resize", function() {
     rotationCheckDisplay();
     toggleMobileButtons();
 });
+
 
 window.addEventListener("orientationchange", function() {
     setTimeout(() => {
@@ -157,6 +161,7 @@ window.addEventListener("orientationchange", function() {
         toggleMobileButtons();
     }, 100);
 });
+
 
 window.addEventListener("load", function() {
     rotationCheckDisplay();
@@ -168,16 +173,17 @@ window.addEventListener("load", function() {
     }
 });
 
-let canThrow = true;
 
 const setKey = (key, value) => {
     if (typeof keyboard !== 'undefined' && keyboard) keyboard[key] = value;
 };
 
+
 function allowThrowLater() {
     canThrow = false;
     setTimeout(() => canThrow = true, 100);
 }
+
 
 function handleThrowKey() {
     if (!canThrow) return;
@@ -185,11 +191,13 @@ function handleThrowKey() {
     allowThrowLater();
 }
 
+
 function handleThrowTouch() {
     if (!canThrow) return;
     setKey('F', true);
     allowThrowLater();
 }
+
 
 function addTouchControl(element, key) {
     if (!element) return;
@@ -201,6 +209,7 @@ function addTouchControl(element, key) {
     element.addEventListener('touchend', (e) => { e.preventDefault(); setKey(key, false); }, { passive: false });
     element.addEventListener('touchcancel', (e) => { e.preventDefault(); setKey(key, false); }, { passive: false });
 }
+
 
 document.addEventListener('DOMContentLoaded', function() {
     const leftBtn = document.querySelector('.m-left');

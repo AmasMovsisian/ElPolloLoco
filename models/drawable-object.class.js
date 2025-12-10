@@ -8,15 +8,18 @@ class DrawableObject {
   currentImage = 0;
   currentImageDead = 0;
   percentOfBottles = 0;
+  
 
   loadImage(path) {
     this.img = new Image();
     this.img.src = path;
   }
 
+
   draw(ctx) {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
+
 
   drawFrame(ctx) {
     if (
@@ -35,6 +38,7 @@ class DrawableObject {
       // ctx.stroke();
     }
   }
+
 
   loadImages(arr) {
     arr.forEach((path) => {

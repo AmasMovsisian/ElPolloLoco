@@ -12,13 +12,16 @@ class Chicken extends Movableobject {
     right: 10,
   };
 
+
   IMAGES_WALKING_CHICKEN = [
     "img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
     "img/3_enemies_chicken/chicken_normal/1_walk/2_w.png",
     "img/3_enemies_chicken/chicken_normal/1_walk/3_w.png",
   ];
 
+
   IMAGE_DEAD_CHICKEN = ["img/3_enemies_chicken/chicken_normal/2_dead/dead.png"];
+
 
   BOTTLE_SPLASH = [
     "img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png",
@@ -28,6 +31,7 @@ class Chicken extends Movableobject {
     "img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png",
     "img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png",
   ];
+
 
   constructor() {
     super().loadImage("img/3_enemies_chicken/chicken_normal/1_walk/1_w.png");
@@ -42,7 +46,6 @@ class Chicken extends Movableobject {
     setInterval(() => {
       if (!this.isDead) this.moveLeft();
     }, 1000 / 60);
-
     setInterval(() => {
       if (!this.isDead) {
         this.playAnimation(this.IMAGES_WALKING_CHICKEN);
@@ -53,11 +56,11 @@ class Chicken extends Movableobject {
     }, 100);
   }
 
+
   splash() {
     this.isDead = true;
     this.isHitFromBottle = true;
     this.frame = 0;
-
     this.splashInterval = setInterval(() => {
       if (this.frame < this.BOTTLE_SPLASH.length) {
         AudioHub.playOne(AudioHub.chickenHurt);

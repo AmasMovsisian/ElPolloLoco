@@ -2,18 +2,20 @@ class Endboss extends Movableobject {
   height = 400;
   width = 250;
   offset = {
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-  };
+      top: 50,
+      bottom: 15,
+      left: 30,
+      right: 30,
+    };
 
+  
   IMAGE_WALKING_END_BOSS = [
     "img/4_enemie_boss_chicken/1_walk/G1.png",
     "img/4_enemie_boss_chicken/1_walk/G2.png",
     "img/4_enemie_boss_chicken/1_walk/G3.png",
     "img/4_enemie_boss_chicken/1_walk/G4.png",
   ];
+
 
   IMAGE_ALERT_END_BOSS = [
     "img/4_enemie_boss_chicken/2_alert/G5.png",
@@ -26,6 +28,7 @@ class Endboss extends Movableobject {
     "img/4_enemie_boss_chicken/2_alert/G12.png",
   ];
 
+
   IMAGE_ATTACK_END_BOSS = [
     "img/4_enemie_boss_chicken/3_attack/G13.png",
     "img/4_enemie_boss_chicken/3_attack/G14.png",
@@ -37,11 +40,13 @@ class Endboss extends Movableobject {
     "img/4_enemie_boss_chicken/3_attack/G20.png",
   ];
 
+
   IMAGE_HURT_END_BOSS = [
     "img/4_enemie_boss_chicken/4_hurt/G21.png",
     "img/4_enemie_boss_chicken/4_hurt/G22.png",
     "img/4_enemie_boss_chicken/4_hurt/G23.png",
   ];
+
 
   IMAGE_DEAD_END_BOSS = [
     "img/4_enemie_boss_chicken/5_dead/G24.png",
@@ -51,33 +56,28 @@ class Endboss extends Movableobject {
 
   constructor() {
     super().loadImage("img/4_enemie_boss_chicken/2_alert/G5.png");
-
     this.x = 5700;
     this.y = 60;
     this.speed = 5;
-
     this.energy = 100;
     this.isDead = false;
     this.isHurt = false;
     this.isKillingActive = false;
     this.currentSound = null;
     this.isReallyWalking = false;
+    this.loadAllAnimations();
+    this.animate();
+  }
 
-    this.offset = {
-      top: 50,
-      bottom: 15,
-      left: 30,
-      right: 30,
-    };
 
+  loadAllAnimations() {
     this.loadImages(this.IMAGE_ALERT_END_BOSS);
     this.loadImages(this.IMAGE_WALKING_END_BOSS);
     this.loadImages(this.IMAGE_ATTACK_END_BOSS);
     this.loadImages(this.IMAGE_HURT_END_BOSS);
     this.loadImages(this.IMAGE_DEAD_END_BOSS);
-
-    this.animate();
   }
+
 
   playBossSound(state) {
     if (this.currentSound === state) return;
@@ -88,69 +88,77 @@ class Endboss extends Movableobject {
     this.currentSound = state;
   }
 
+
   stopAllBossSounds() {
     AudioHub.stop(AudioHub.endBossWalking);
     AudioHub.stop(AudioHub.endBossAttack);
     this.currentSound = null;
   }
 
+
   animate() {
     this.animationInterval = setInterval(() => this.updateAnimation(), 100);
     this.movementInterval = setInterval(() => this.updateMovement(), 1000 / 24);
   }
 
+
   updateAnimation() {
-    if (this.isDead) {
-      this.playAnimation(this.IMAGE_DEAD_END_BOSS);
-
-      this.stopAllBossSounds();
-      if (world.character.energy > 0) 
-        AudioHub.playOne(AudioHub.characterWon);
-      clearInterval(this.animationInterval);
-      clearInterval(this.movementInterval);
-      AudioHub.stop(AudioHub.characterSnoring);
-      return;
-    }
-
-    if (this.isHurt) {
-      this.playAnimation(this.IMAGE_HURT_END_BOSS);
-      setTimeout(() => (this.isHurt = false), 500);
-      return;
-    }
-
-    if (this.isKillingActive) {
-      this.playAnimation(this.IMAGE_ATTACK_END_BOSS);
-      this.playBossSound("attack");
-      return;
-    }
-
-    if (this.energy <= 60) {
-      this.playAnimation(this.IMAGE_ATTACK_END_BOSS);
-      this.playBossSound("attack");
-      return;
-    }
-
-    if (this.energy <= 80) {
-      this.playAnimation(this.IMAGE_WALKING_END_BOSS);
-      if (this.isReallyWalking) this.playBossSound("walking");
-      return;
-    }
-
-    this.playAnimation(this.IMAGE_ALERT_END_BOSS);
-    this.playBossSound(null);
+    if (this.isDead) return this.handleDeathAnimation();
+    if (this.isHurt) return this.handleHurtAnimation();
+    this.handleEnergyBasedAnimation();
   }
 
-  updateMovement() {
-    if (this.isDead) {
-       return;
+
+  handleDeathAnimation() {
+  this.playAnimation(this.IMAGE_DEAD_END_BOSS);
+  this.stopCharacter(); 
+  setTimeout(() => {
+    this.stopAllBossSounds();
+    if (world.character.energy > 0) AudioHub.playOne(AudioHub.characterWon);
+    clearInterval(this.animationInterval);
+    clearInterval(this.movementInterval);
+    AudioHub.stopAllCharacterSounds();
+    if (typeof endGame === 'function') endGame();
+  }, 1500);
+}
+
+
+stopCharacter() {
+  if (world && world.character) {
+    world.character.speed = 0;
+    world.keyboard = {};
+    if (world.character.stopAnimations) {
+      world.character.stopAnimations();
     }
-   
+  }
+}
 
+
+  handleHurtAnimation() {
+    this.playAnimation(this.IMAGE_HURT_END_BOSS);
+    setTimeout(() => (this.isHurt = false), 500);
+  }
+
+
+  handleEnergyBasedAnimation() {
+    if (this.isKillingActive || this.energy <= 60) {
+      this.playAnimation(this.IMAGE_ATTACK_END_BOSS);
+      this.playBossSound("attack");
+    } else if (this.energy <= 80) {
+      this.playAnimation(this.IMAGE_WALKING_END_BOSS);
+      if (this.isReallyWalking) this.playBossSound("walking");
+    } else {
+      this.playAnimation(this.IMAGE_ALERT_END_BOSS);
+      this.playBossSound(null);
+    }
+  }
+
+
+  updateMovement() {
+    if (this.isDead) return;
     let before = this.x;
-
     if (this.energy <= 80 && this.energy > 0) {
       let dist = Math.abs(this.x - world.character.x);
-
       if (dist <= 50) {
         if (!this.isKillingActive) this.startKillingMode();
       } else {
@@ -158,10 +166,10 @@ class Endboss extends Movableobject {
         this.moveLeft();
       }
     }
-
     let moved = this.x !== before;
     this.isReallyWalking = moved && !this.isKillingActive;
   }
+
 
   startKillingMode() {
     this.isKillingActive = true;
@@ -169,19 +177,26 @@ class Endboss extends Movableobject {
     this.jump();
   }
 
+
   stopKillingMode() {
     this.isKillingActive = false;
   }
 
+
   hit(damage = 2) {
     if (this.isDead) return;
-
     this.energy -= damage;
     if (this.energy <= 0) {
       this.energy = 0;
       this.isDead = true;
     }
-
     this.isHurt = true;
+  }
+
+
+  stopAnimations() {
+    clearInterval(this.animationInterval);
+    clearInterval(this.movementInterval);
+    this.stopAllBossSounds();
   }
 }

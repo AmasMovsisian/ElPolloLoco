@@ -6,6 +6,7 @@ class Movableobject extends DrawableObject {
   energy = 100;
   coinCrowd = 0;
   lasthit = 0;
+  isGameOver = false;
   offset = {
     top: 0,
     bottom: 0,
@@ -13,12 +14,20 @@ class Movableobject extends DrawableObject {
     right: 0,
   };
 
-  rX;
-  rY;
-  rW;
-  rH;
 
-  
+  gameOver() {
+    this.isGameOver = true;
+    if (this.character && this.character.stopAnimations) {
+      this.character.stopAnimations();
+    }
+    if (this.level && this.level.endboss) {
+      this.level.endboss.forEach(boss => {
+        if (boss.stopAnimations) boss.stopAnimations();
+      });
+    }
+    endGame();
+  }
+
 
   applyGravity() {
     setInterval(() => {
@@ -29,6 +38,7 @@ class Movableobject extends DrawableObject {
     }, 1000 / 25);
   }
 
+
   isAboveGround() {
     if (this instanceof ThrowableObject) {
       return true;
@@ -36,6 +46,7 @@ class Movableobject extends DrawableObject {
       return this.y < 135;
     }
   }
+
 
  isColliding(mo) {
   return (
@@ -46,6 +57,7 @@ class Movableobject extends DrawableObject {
   );
 }
 
+
   isCollidingTop(mo) {
     if (!this.isColliding(mo)) return false;
     const bottomA = this.y + this.height - this.offset.bottom;
@@ -55,16 +67,13 @@ class Movableobject extends DrawableObject {
     const topB = mo.y + mo.offset.top;
     const leftB = mo.x + mo.offset.left;
     const rightB = mo.x + mo.width - mo.offset.right;
-
     const horizontallyCentered = rightA > leftB && leftA < rightB;
-
     if (!horizontallyCentered) return false;
     const isAbove = bottomA <= topB + 10;
-
     if (!isAbove) return false;
-
     return true;
   }
+
 
   hit() {
     this.energy -= 1;
@@ -75,23 +84,28 @@ class Movableobject extends DrawableObject {
     }
   }
 
+
   isHurt() {
     let timepassed = new Date().getTime() - this.lasthit;
     timepassed = timepassed / 500;
     return timepassed < 0.5;
   }
 
+
   isDead() {
     return this.energy == 0;
   }
+
 
   moveRight() {
     this.x += this.speed;
   }
 
+
   moveLeft() {
     this.x -= this.speed;
   }
+
 
   playAnimation(images) {
     let i = this.currentImage % images.length;
@@ -99,6 +113,7 @@ class Movableobject extends DrawableObject {
     this.img = this.imageCahche[path];
     this.currentImage++;
   }
+
 
   playOnceAnimation(images) {
     if (this.currentImageDead < images.length) {
@@ -108,9 +123,11 @@ class Movableobject extends DrawableObject {
     }
   }
 
+
   jump() {
     this.speedy = 30;
   }
+
 
   enemyWasHit() {
     this.isDead = true;

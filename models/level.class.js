@@ -8,6 +8,7 @@ class Level {
   level_end_x;
   end_of_X;
 
+  
   constructor(enemies, endboss, clouds, coins, bottles, backgroundObjects) {
     this.enemies = enemies;
     this.endboss = endboss;
@@ -18,6 +19,7 @@ class Level {
     this.endboss_X();
   }
 
+  
   endboss_X() {
     for (let i = 0; i < this.endboss.length; i++) {
       setInterval(() => {

@@ -21,7 +21,7 @@ class AudioHub {
   static endBossWalking = new Audio("audio/endboss-walking.mp3");
   static bgSound = new Audio("audio/BG-music.mp3");
 
-  static allSounds = [
+  static allGameSounds = [
     AudioHub.characterWalking,
     AudioHub.characterJump,
     AudioHub.characterHurt,
@@ -38,7 +38,6 @@ class AudioHub {
     AudioHub.endBossHurt,
     AudioHub.endBossAttack,
     AudioHub.endBossWalking,
-    AudioHub.bgSound,
   ];
 
 
@@ -46,7 +45,7 @@ class AudioHub {
    * Stops all game sounds and resets their playback position.
    */
   static stopAllSounds() {
-  this.allSounds.forEach(s => (s.pause(), s.currentTime = 0));
+    this.allGameSounds.forEach(s => (s.pause(), s.currentTime = 0));
   }
 
 
@@ -115,6 +114,7 @@ class AudioHub {
 
   static isMuted = localStorage.getItem("isMuted") === "true";
   static savedVolume = parseFloat(localStorage.getItem("volume")) || 0.2;
+  static isBgMuted = localStorage.getItem("isBgMuted") === "true";
 
 
   /**
@@ -132,11 +132,40 @@ class AudioHub {
 
 
   /**
+   * Toggles mute state for background sound only.
+   * @returns {boolean} The new background mute state.
+   */
+  static toggleMuteBG() {
+    this.isBgMuted = !this.isBgMuted;
+    localStorage.setItem("isBgMuted", this.isBgMuted);
+    this.updateBgSound();
+    this.updateBgMuteButton();
+    return this.isBgMuted;
+  }
+
+
+  /**
    * Updates volume for all sounds based on current mute state.
    */
   static updateAllSounds() {
     const volume = this.isMuted ? 0 : this.savedVolume;
-    AudioHub.allSounds.forEach((sound) => (sound.volume = volume));
+    AudioHub.allGameSounds.forEach((sound) => (sound.volume = volume));
+  }
+
+
+  /**
+   * Updates background sound based on current background mute state.
+   */
+  static updateBgSound() {
+    const volume = this.isBgMuted ? 0 : this.savedVolume;
+    AudioHub.bgSound.volume = volume;
+    
+    if (!this.isBgMuted && AudioHub.bgSound.paused) {
+      AudioHub.bgSound.loop = true;
+      AudioHub.bgSound.play();
+    } else if (this.isBgMuted) {
+      AudioHub.bgSound.pause();
+    }
   }
 
 
@@ -149,6 +178,18 @@ class AudioHub {
     muteBtn.textContent = this.isMuted ? "Sound ON" : "Sound OFF";
     muteBtn.classList.toggle("muted", !this.isMuted);
     muteBtn.classList.toggle("unmuted", this.isMuted);
+  }
+
+
+  /**
+   * Updates the background mute button text and visual state.
+   */
+  static updateBgMuteButton() {
+    const bgMuteBtn = document.querySelector(".toggle-mute-btn-BG");
+    if (!bgMuteBtn) return;
+    bgMuteBtn.textContent = this.isBgMuted ? "BG Sound ON" : "BG Sound OFF";
+    bgMuteBtn.classList.toggle("muted", !this.isBgMuted);
+    bgMuteBtn.classList.toggle("unmuted", this.isBgMuted);
   }
 
 
@@ -167,7 +208,9 @@ class AudioHub {
    */
   static applySavedSettings() {
     this.updateAllSounds();
+    this.updateBgSound();
     this.updateMuteButton();
+    this.updateBgMuteButton();
   }
 }
 

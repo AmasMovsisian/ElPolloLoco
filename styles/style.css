@@ -409,6 +409,7 @@ canvas {
 
 
 .audio-controls-container {
+    gap: 420px;
     display: none;
     position: fixed;
     bottom: 20px;
@@ -473,6 +474,55 @@ canvas {
 .toggle-mute-btn.unmuted:hover {
     background: linear-gradient(180deg, #55ff55 0%, #00dd00 100%);
 }
+
+
+.toggle-mute-btn-BG {
+    pointer-events: auto;
+    padding: 6px 18px;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Luckiest Guy', sans-serif;
+    font-size: 18px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    color: white;
+    min-width: 140px;
+    text-align: center;
+}
+
+
+.toggle-mute-btn-BG.muted {
+    background: linear-gradient(180deg, #ff4444 0%, #cc0000 100%);
+}
+
+
+.toggle-mute-btn-BG.unmuted {
+    background: linear-gradient(180deg, #44ff44 0%, #00cc00 100%);
+}
+
+
+.toggle-mute-btn-BG:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+
+.toggle-mute-btn-BG:active {
+    transform: translateY(0);
+}
+
+
+.toggle-mute-btn-BG.muted:hover {
+    background: linear-gradient(180deg, #ff5555 0%, #dd0000 100%);
+}
+
+
+.toggle-mute-btn-BG.unmuted:hover {
+    background: linear-gradient(180deg, #55ff55 0%, #00dd00 100%);
+}
+
 
 
 @media (max-width: 720px) {
@@ -554,4 +604,3 @@ canvas {
         padding: 4px 8px;
     }
 }
-

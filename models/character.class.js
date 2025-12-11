@@ -163,14 +163,14 @@ class Character extends Movableobject {
   /**
    * Sets up the interval for character animation updates.
    */
-  setupAnimationInterval() {
+setupAnimationInterval() {
     setInterval(() => {
       if (this.isDead()) return this.handleDeadState();
       if (this.isHurt()) return this.handleHurtState();
       if (this.isAboveGround()) return this.handleJumpState();
       if (this.isLongIdle) return this.handleLongIdleState();
       this.handleNormalState();
-    }, 2000 / 24);
+    }, 12450 / 120);
   }
 
   /**
@@ -232,7 +232,7 @@ class Character extends Movableobject {
       if (this.world && this.world.isGameOver) {
         this.isLongIdle = false;
         return;  }
-      const noInput = !this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.SPACE && !this.world.keyboard.UP;
+      const noInput = !this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.SPACE && !this.world.keyboard.UP && !this.world.keyboard.F;
       if (noInput && !this.isLongIdle) {
         const idleDuration = Date.now() - this.lastMovementTime;
         if (idleDuration > 15000) this.isLongIdle = true;

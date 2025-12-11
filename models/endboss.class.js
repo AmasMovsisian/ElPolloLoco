@@ -179,7 +179,7 @@ stopCharacter() {
     if (this.isKillingActive || this.energy <= 60) {
       this.playAnimation(this.IMAGE_ATTACK_END_BOSS);
       this.playBossSound("attack");
-    } else if (this.energy <= 80) {
+    } else if (this.energy < 100) {
       this.playAnimation(this.IMAGE_WALKING_END_BOSS);
       if (this.isReallyWalking) this.playBossSound("walking");
     } else {
@@ -195,7 +195,7 @@ stopCharacter() {
   updateMovement() {
     if (this.isDead) return;
     let before = this.x;
-    if (this.energy <= 80 && this.energy > 0) {
+    if (this.energy < 100 && this.energy > 0) {
       let dist = Math.abs(this.x - world.character.x);
       if (dist <= 50) {
         if (!this.isKillingActive) this.startKillingMode();

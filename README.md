@@ -45,6 +45,4 @@ Collect coins and Tabasco salsa bottles, avoid enemies, and use your bottles wis
 
 **Amas Movsisian**
 
-## 🙏 Credits
-
 The graphics and game assets were provided by **Developer Akademie** for educational purposes.
